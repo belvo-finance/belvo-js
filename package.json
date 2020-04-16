@@ -1,0 +1,35 @@
+{
+  "name": "belvo",
+  "version": "0.0.1",
+  "description": "The node.js module for the Belvo API",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./src",
+    "build": "npm run lint && babel ./src -d ./lib",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/belvo-finance/belvo-js.git"
+  },
+  "keywords": [
+    "belvo",
+    "openbanking"
+  ],
+  "author": "Belvo Finance, S.L.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/belvo-finance/belvo-js/issues"
+  },
+  "homepage": "https://github.com/belvo-finance/belvo-js#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^25.3.0"
+  }
+}
