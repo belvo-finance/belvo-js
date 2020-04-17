@@ -1,4 +1,4 @@
-<h1 align="center">Belvo JS</h1>
+<h1 align="center">Belvo Js</h1>
 <p align="center">
     <img alt="Github build" src="https://img.shields.io/github/workflow/status/belvo-finance/belvo-js/Tests?style=for-the-badge">
     <a href="https://coveralls.io/github/belvo-finance/belvo-js"><img alt="Coveralls github" src="https://img.shields.io/coveralls/github/belvo-finance/belvo-js?style=for-the-badge"></a>
