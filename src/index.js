@@ -1,4 +1,4 @@
-import APISession from 'http';
+import APISession from './http';
 
 class Client {
   constructor(secretKeyId, secretKeyPassword, url = null) {

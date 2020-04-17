@@ -1,32 +1,33 @@
 /* eslint-disable no-console */
 
-import { create } from 'axios';
+import axios from 'axios';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 class APISession {
   constructor(url) {
-    this.url = url;
-    this.session = create({
-      baseURL: this.url,
+    const version = '0.0.1';
+    this.session = axios.create({
+      baseURL: url,
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'belvo-js ({})'.format('0.0.1'),
+        'User-Agent': `belvo-js (${version})`,
       },
     });
   }
 
-  login(secretKeyId, secretKeyPassword) {
+  async login(secretKeyId, secretKeyPassword) {
     const auth = {
       username: secretKeyId,
       password: secretKeyPassword,
     };
 
-    this.session.get('/api/', { auth })
-      .catch((error) => {
-        console.log(error.response.status);
-        console.log(error.response.data);
-        return false;
-      });
 
+    try {
+      await this.session.get('/api/', { auth });
+    } catch (error) {
+      return false;
+    }
     this.session.defaults.auth = auth;
     return true;
   }
