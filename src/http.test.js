@@ -35,6 +35,9 @@ test('incorrect login returns false', async () => {
 
 test('list supports pagination', async () => {
   nock('https://fake.api')
+    .get('/api/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .reply(200)
     .get('/api/things/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, {
@@ -44,6 +47,7 @@ test('list supports pagination', async () => {
       results: [{ one: 1 }],
     })
     .get('/api/things/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .query({ page: 2 })
     .reply(200, {
       count: 3,
@@ -52,6 +56,7 @@ test('list supports pagination', async () => {
       results: [{ two: 2 }],
     })
     .get('/api/things/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .query({ page: 3 })
     .reply(200, {
       count: 3,
@@ -62,8 +67,11 @@ test('list supports pagination', async () => {
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
-  const listOfThings = session.list('/api/things/');
 
-  expect(listOfThings.length).toBe(3);
-  expect(listOfThings).toBe([{ one: 1 }, { two: 2 }, { three: 3 }]);
+  const result = [];
+  for await (let r of session.getAll('/api/things/')) {
+    result.push(r);
+  }
+  expect(result.length).toBe(3);
+  expect(result).toEqual([{ one: 1 }, { two: 2 }, { three: 3 }]);
 });

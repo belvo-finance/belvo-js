@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 import axios from 'axios';
-import '@babel/polyfill';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -32,21 +31,18 @@ class APISession {
     this.session.defaults.auth = auth;
     return true;
   }
-}
 
-function* list(url) {
-  let path = url;
-  for (; ;) {
-    const data = this.session.get(path);
-    yield data.results.map((result) => result);
+  async* getAll(url) {
+    const response = await this.session.get(url);
 
-    if (!data.next) {
-      break;
+    for (const item of response.data.results) {
+      yield item;
     }
 
-    path = data.next;
+    if (response.data.next) {
+      yield* this.getAll(response.data.next);
+    }
   }
 }
-
 
 export default APISession;
