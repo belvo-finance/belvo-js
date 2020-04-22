@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
 import axios from 'axios';
+import '@babel/polyfill';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -31,6 +32,20 @@ class APISession {
     this.session.defaults.auth = auth;
     return true;
   }
+
+  }
+
+  // function* list(url) {
+  //   let path = url;
+  //   for (;;) {
+  //     const data = this.session.get(path);
+  //     data.results.forEach((result) => yield result);
+
+  //     if (data.next === null) { break; }
+
+  //     path = data.next;
+  //   }
+  // }
 }
 
 export default APISession;
