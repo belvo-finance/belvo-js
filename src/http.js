@@ -35,6 +35,7 @@ class APISession {
   async* getAll(url) {
     const response = await this.session.get(url);
 
+    // eslint-disable-next-line no-restricted-syntax
     for (const item of response.data.results) {
       yield item;
     }
