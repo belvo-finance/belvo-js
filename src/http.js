@@ -32,20 +32,21 @@ class APISession {
     this.session.defaults.auth = auth;
     return true;
   }
-
-  }
-
-  // function* list(url) {
-  //   let path = url;
-  //   for (;;) {
-  //     const data = this.session.get(path);
-  //     data.results.forEach((result) => yield result);
-
-  //     if (data.next === null) { break; }
-
-  //     path = data.next;
-  //   }
-  // }
 }
+
+function* list(url) {
+  let path = url;
+  for (; ;) {
+    const data = this.session.get(path);
+    yield data.results.map((result) => result);
+
+    if (!data.next) {
+      break;
+    }
+
+    path = data.next;
+  }
+}
+
 
 export default APISession;
