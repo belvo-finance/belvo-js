@@ -2,6 +2,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import nock from 'nock';
 import APISession from './http';
+import RequestError from './exceptions';
 
 test('can login', async () => {
   const scope = nock('https://fake.api', {
@@ -118,4 +119,42 @@ test('list obeys limit', async () => {
 
   expect(result).toEqual([{ one: 1 }, { two: 2 }]);
   expect(scope.isDone()).toBeFalsy();
+});
+
+
+test('get by id works ok', async () => {
+  const scope = nock('https://fake.api')
+    .get('/api/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .reply(200)
+    .get('/api/things/666/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .reply(200, { id: 666, one: 1 });
+
+  const session = new APISession('https://fake.api');
+  await session.login('secret-id', 'secret-password');
+
+  const result = await session.get('/api/things/', 666);
+
+  expect(result).toEqual({ id: 666, one: 1 });
+  expect(scope.isDone()).toBeTruthy();
+});
+
+
+test('get handles error', async () => {
+  const scope = nock('https://fake.api')
+    .get('/api/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .reply(200)
+    .get('/api/things/666/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .reply(404);
+
+  const session = new APISession('https://fake.api');
+  await session.login('secret-id', 'secret-password');
+
+  await expect(session.get('/api/things/', 666))
+    .rejects
+    .toEqual(new RequestError(404, 'Request failed with status code 404'));
+  expect(scope.isDone()).toBeTruthy();
 });

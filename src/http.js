@@ -3,6 +3,7 @@
 import axios from 'axios';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import RequestError from './exceptions';
 
 class APISession {
   constructor(url) {
@@ -55,6 +56,15 @@ class APISession {
       results.push(next.value);
     }
     return results;
+  }
+
+  async get(url, id) {
+    try {
+      const { data } = await this.session.get(`${url}${id}/`);
+      return data;
+    } catch (error) {
+      throw new RequestError(error.response.status, error.message);
+    }
   }
 }
 
