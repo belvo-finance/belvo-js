@@ -1,5 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import nock from 'nock';
 import APISession from './http';
 import RequestError from './exceptions';
