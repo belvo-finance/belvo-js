@@ -6,7 +6,7 @@ import 'regenerator-runtime/runtime';
 import RequestError from './exceptions';
 
 
-async function doRequest(fn) {
+async function raiseForStatus(fn) {
   try {
     const { data } = await fn;
     return data;
@@ -35,7 +35,7 @@ class APISession {
 
 
     try {
-      await this.session.get('/api/', { auth });
+      await raiseForStatus(this.session.get('/api/', { auth }));
     } catch (error) {
       return false;
     }
@@ -69,11 +69,34 @@ class APISession {
   }
 
   async get(url, id) {
-    return doRequest(this.session.get(`${url}${id}/`));
+    const response = await raiseForStatus(this.session.get(`${url}${id}/`));
+    return response;
   }
 
   async post(url, payload) {
-    return doRequest(this.session.post(url, payload));
+    const response = await raiseForStatus(this.session.post(url, payload));
+    return response;
+  }
+
+  async patch(url, payload) {
+    const response = await raiseForStatus(this.session.patch(url, payload));
+    return response;
+  }
+
+  async put(url, id, payload) {
+    const composedUrl = `${url}${id}/`;
+    const response = await raiseForStatus(this.session.put(composedUrl, payload));
+    return response;
+  }
+
+  async delete(url, id) {
+    const composedUrl = `${url}${id}/`;
+    try {
+      await raiseForStatus(this.session.delete(composedUrl));
+    } catch (error) {
+      return false;
+    }
+    return true;
   }
 }
 
