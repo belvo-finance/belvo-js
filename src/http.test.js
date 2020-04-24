@@ -64,6 +64,20 @@ class Mocker {
     this.addThingsPageOne().addThingsPageTwo().addThingsPageThree();
     return this;
   }
+
+  addPostThings() {
+    this.scope
+      .post('/api/things/', { foo: 'bar' })
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' });
+    return this;
+  }
+
+  addDeleteThings() {
+    this.scope
+      .delete('/api/things/666/')
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' });
+    return this;
+  }
 }
 
 const mocker = new Mocker('https://fake.api');
@@ -174,11 +188,8 @@ test('get handles error', async () => {
 });
 
 test('post returns map when ok', async () => {
-  mocker.login();
-  mocker.scope
-    .post('/api/things/', { foo: 'bar' })
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200, { id: 666, foo: 'bar' });
+  mocker.login().addPostThings();
+  mocker.scope.reply(200, { id: 666, foo: 'bar' });
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
@@ -190,10 +201,8 @@ test('post returns map when ok', async () => {
 });
 
 test('post handles error ', async () => {
-  mocker.login();
+  mocker.login().addPostThings();
   mocker.scope
-    .post('/api/things/', { foo: 'bar' })
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(400, [{ code: 'wrong_foo', detail: 'Foo cannot be Bar', field: 'foo' }]);
 
   const session = new APISession('https://fake.api');
@@ -238,11 +247,8 @@ test('put returns map when ok', async () => {
 });
 
 test('delete returns true when ok', async () => {
-  mocker.login();
-  mocker.scope
-    .delete('/api/things/666/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(204);
+  mocker.login().addDeleteThings();
+  mocker.scope.reply(204);
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
@@ -253,11 +259,8 @@ test('delete returns true when ok', async () => {
 });
 
 test('delete returns false when not ok', async () => {
-  mocker.login();
-  mocker.scope
-    .delete('/api/things/666/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(404);
+  mocker.login().addDeleteThings();
+  mocker.scope.reply(404);
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
