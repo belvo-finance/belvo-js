@@ -5,6 +5,16 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import RequestError from './exceptions';
 
+
+async function doRequest(fn) {
+  try {
+    const { data } = await fn;
+    return data;
+  } catch (error) {
+    throw new RequestError(error.response.status, error.response.data);
+  }
+}
+
 class APISession {
   constructor(url) {
     const version = '0.0.1';
@@ -59,12 +69,11 @@ class APISession {
   }
 
   async get(url, id) {
-    try {
-      const { data } = await this.session.get(`${url}${id}/`);
-      return data;
-    } catch (error) {
-      throw new RequestError(error.response.status, error.message);
-    }
+    return doRequest(this.session.get(`${url}${id}/`));
+  }
+
+  async post(url, payload) {
+    return doRequest(this.session.post(url, payload));
   }
 }
 

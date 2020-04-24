@@ -156,3 +156,39 @@ test('get handles error', async () => {
     .toEqual(new RequestError(404, 'Request failed with status code 404'));
   expect(scope.isDone()).toBeTruthy();
 });
+
+test('post returns map when ok', async () => {
+  const scope = nock('https://fake.api')
+    .get('/api/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .reply(200)
+    .post('/api/things/', { foo: 'bar' })
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .reply(200, { id: 666, foo: 'bar' });
+
+  const session = new APISession('https://fake.api');
+  await session.login('secret-id', 'secret-password');
+
+  const result = await session.post('/api/things/', { foo: 'bar' });
+
+  expect(result).toEqual({ id: 666, foo: 'bar' });
+  expect(scope.isDone()).toBeTruthy();
+});
+
+test('post handles error ', async () => {
+  const scope = nock('https://fake.api')
+    .get('/api/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .reply(200)
+    .post('/api/things/', { foo: 'bar' })
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .reply(400, [{ code: 'wrong_foo', detail: 'Foo cannot be Bar', field: 'foo' }]);
+
+  const session = new APISession('https://fake.api');
+  await session.login('secret-id', 'secret-password');
+
+  await expect(session.post('/api/things/', { foo: 'bar' }))
+    .rejects
+    .toEqual(new RequestError(400, 'Request failed with status code 400'));
+  expect(scope.isDone()).toBeTruthy();
+});
