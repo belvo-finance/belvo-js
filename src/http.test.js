@@ -92,6 +92,13 @@ class Mocker {
 
 const mocker = new Mocker('https://fake.api');
 
+const newSession = async () => {
+  const apiSession = new APISession('https://fake.api');
+  await apiSession.login('secret-id', 'secret-password');
+  return apiSession;
+};
+
+
 beforeEach(async () => {
   nock.cleanAll();
 });
@@ -99,27 +106,24 @@ beforeEach(async () => {
 test('can login', async () => {
   mocker.login();
 
-  const session = new APISession('https://fake.api');
-  const login = await session.login('secret-id', 'secret-password');
-
+  const session = await newSession();
+  expect(session).toBeTruthy();
   expect(mocker.scope.isDone()).toBeTruthy();
-  expect(login).toBeTruthy();
 });
 
 test('incorrect login returns false', async () => {
   mocker.login();
 
-  const session = new APISession('https://fake.api');
-  const login = await session.login('secret-id', 'wrong-password');
+  const badSession = new APISession('https://fake.api');
+  const login = await badSession.login('secret-id', 'wrong-password');
 
   expect(login).toBeFalsy();
 });
 
 test('getAll() supports pagination', async () => {
   mocker.login().replyWithPaginatedThings();
+  const session = await newSession();
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
   const result = [];
   // eslint-disable-next-line no-restricted-syntax
   for await (const r of session.getAll('/api/things/')) {
@@ -143,9 +147,7 @@ test('list obeys limit', async () => {
       results: [{ three: 3 }],
     });
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
-
+  const session = await newSession();
   const result = await session.list('/api/things/', 2);
 
   expect(result).toEqual([{ one: 1 }, { two: 2 }]);
@@ -156,8 +158,7 @@ test('list obeys limit', async () => {
 test('list without limit gets everything', async () => {
   mocker.login().replyWithPaginatedThings();
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
+  const session = await newSession();
   const result = await session.list('/api/things/');
 
   expect(result).toEqual([{ one: 1 }, { two: 2 }, { three: 3 }]);
@@ -167,9 +168,7 @@ test('list without limit gets everything', async () => {
 test('get by id works ok', async () => {
   mocker.login().replyToGetThing(200, { id: 666, one: 1 });
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
-
+  const session = await newSession();
   const result = await session.get('/api/things/', 666);
 
   expect(result).toEqual({ id: 666, one: 1 });
@@ -180,9 +179,7 @@ test('get by id works ok', async () => {
 test('get handles error', async () => {
   mocker.login().replyToGetThing(404);
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
-
+  const session = await newSession();
   await expect(session.get('/api/things/', 666))
     .rejects
     .toEqual(new RequestError(404, 'Request failed with status code 404'));
@@ -192,9 +189,7 @@ test('get handles error', async () => {
 test('post returns map when ok', async () => {
   mocker.login().replyToPostThings(200, { id: 666, foo: 'bar' });
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
-
+  const session = await newSession();
   const result = await session.post('/api/things/', { foo: 'bar' });
 
   expect(result).toEqual({ id: 666, foo: 'bar' });
@@ -208,9 +203,7 @@ test('post handles error ', async () => {
       { code: 'wrong_foo', detail: 'Foo cannot be Bar', field: 'foo' },
     ]);
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
-
+  const session = await newSession();
   await expect(session.post('/api/things/', { foo: 'bar' }))
     .rejects
     .toEqual(new RequestError(400, 'Request failed with status code 400'));
@@ -224,9 +217,7 @@ test('patch returns map when ok', async () => {
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, { id: 666, foo: 'bar' });
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
-
+  const session = await newSession();
   const result = await session.patch('/api/things/', { foo: 'bar' });
 
   expect(result).toEqual({ id: 666, foo: 'bar' });
@@ -240,9 +231,7 @@ test('put returns map when ok', async () => {
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, { id: 666, foo: 'bar' });
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
-
+  const session = await newSession();
   const result = await session.put('/api/things/', 666, { foo: 'bar' });
 
   expect(result).toEqual({ id: 666, foo: 'bar' });
@@ -252,8 +241,7 @@ test('put returns map when ok', async () => {
 test('delete returns true when ok', async () => {
   mocker.login().replyToDeleteThings(204);
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
+  const session = await newSession();
   const result = await session.delete('/api/things/', 666);
 
   expect(result).toBeTruthy();
@@ -263,9 +251,7 @@ test('delete returns true when ok', async () => {
 test('delete returns false when not ok', async () => {
   mocker.login().replyToDeleteThings(404);
 
-  const session = new APISession('https://fake.api');
-  await session.login('secret-id', 'secret-password');
-
+  const session = await newSession();
   const result = await session.delete('/api/things/', 666);
 
   expect(result).toBeFalsy();
