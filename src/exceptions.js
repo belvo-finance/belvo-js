@@ -1,8 +1,8 @@
 class RequestError extends Error {
-  constructor(statusCode, message, ...params) {
+  constructor(statusCode, detail, ...params) {
     super(...params);
     this.statusCode = statusCode;
-    this.message = message;
+    this.detail = detail;
   }
 }
 
