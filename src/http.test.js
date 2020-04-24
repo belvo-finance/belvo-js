@@ -2,11 +2,7 @@ import nock from 'nock';
 import APISession from './http';
 import RequestError from './exceptions';
 
-beforeEach(async () => {
-  nock.cleanAll();
-});
-
-test('can login', async () => {
+function mockLogin() {
   const scope = nock('https://fake.api', {
     reqheaders: {
       'user-agent': (headerValue) => headerValue.includes('belvo-js'),
@@ -15,32 +11,32 @@ test('can login', async () => {
     .get('/api/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200);
+  return scope;
+}
 
+beforeEach(async () => {
+  nock.cleanAll();
+});
+
+test('can login', async () => {
+  const scope = mockLogin();
   const session = new APISession('https://fake.api');
   const login = await session.login('secret-id', 'secret-password');
+
   expect(scope.isDone()).toBeTruthy();
   expect(login).toBeTruthy();
 });
 
 test('incorrect login returns false', async () => {
-  nock('https://fake.api', {
-    reqheaders: {
-      'user-agent': (headerValue) => headerValue.includes('belvo-js'),
-    },
-  })
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' });
-
+  mockLogin();
   const session = new APISession('https://fake.api');
   const login = await session.login('secret-id', 'wrong-password');
+
   expect(login).toBeFalsy();
 });
 
 test('getAll() supports pagination', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .get('/api/things/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, {
@@ -82,10 +78,7 @@ test('getAll() supports pagination', async () => {
 });
 
 test('list obeys limit', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .get('/api/things/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, {
@@ -126,10 +119,7 @@ test('list obeys limit', async () => {
 });
 
 test('list without limit gets everything', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .get('/api/things/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, {
@@ -168,10 +158,7 @@ test('list without limit gets everything', async () => {
 
 
 test('get by id works ok', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .get('/api/things/666/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, { id: 666, one: 1 });
@@ -187,10 +174,7 @@ test('get by id works ok', async () => {
 
 
 test('get handles error', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .get('/api/things/666/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(404);
@@ -205,10 +189,7 @@ test('get handles error', async () => {
 });
 
 test('post returns map when ok', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .post('/api/things/', { foo: 'bar' })
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, { id: 666, foo: 'bar' });
@@ -223,10 +204,7 @@ test('post returns map when ok', async () => {
 });
 
 test('post handles error ', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .post('/api/things/', { foo: 'bar' })
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(400, [{ code: 'wrong_foo', detail: 'Foo cannot be Bar', field: 'foo' }]);
@@ -241,10 +219,7 @@ test('post handles error ', async () => {
 });
 
 test('patch returns map when ok', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .patch('/api/things/', { foo: 'bar' })
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, { id: 666, foo: 'bar' });
@@ -259,10 +234,7 @@ test('patch returns map when ok', async () => {
 });
 
 test('put returns map when ok', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .put('/api/things/666/', { foo: 'bar' })
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(200, { id: 666, foo: 'bar' });
@@ -277,10 +249,7 @@ test('put returns map when ok', async () => {
 });
 
 test('delete returns true when ok', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .delete('/api/things/666/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(204);
@@ -295,10 +264,7 @@ test('delete returns true when ok', async () => {
 });
 
 test('delete returns false when not ok', async () => {
-  const scope = nock('https://fake.api')
-    .get('/api/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200)
+  const scope = mockLogin()
     .delete('/api/things/666/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
     .reply(404);
