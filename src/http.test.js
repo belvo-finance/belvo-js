@@ -19,7 +19,7 @@ class Mocker {
     return this;
   }
 
-  paginatedThings() {
+  addThingsPageOne() {
     this.scope
       .get('/api/things/')
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
@@ -28,7 +28,12 @@ class Mocker {
         next: 'https://fake.api/api/things/?page=2',
         previous: null,
         results: [{ one: 1 }],
-      })
+      });
+    return this;
+  }
+
+  addThingsPageTwo() {
+    this.scope
       .get('/api/things/')
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .query({ page: 2 })
@@ -37,7 +42,12 @@ class Mocker {
         next: 'https://fake.api/api/things/?page=3',
         previous: 'https://fake.api/api/things/?page=1',
         results: [{ two: 2 }],
-      })
+      });
+    return this;
+  }
+
+  addThingsPageThree() {
+    this.scope
       .get('/api/things/')
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .query({ page: 3 })
@@ -47,6 +57,11 @@ class Mocker {
         previous: 'https://fake.api/api/things/?page=2',
         results: [{ three: 3 }],
       });
+    return this;
+  }
+
+  paginatedThings() {
+    this.addThingsPageOne().addThingsPageTwo().addThingsPageThree();
     return this;
   }
 }
@@ -92,26 +107,7 @@ test('getAll() supports pagination', async () => {
 });
 
 test('list obeys limit', async () => {
-  mocker.login();
-  mocker.scope
-    .get('/api/things/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200, {
-      count: 3,
-      next: 'https://fake.api/api/things/?page=2',
-      previous: null,
-      results: [{ one: 1 }],
-    })
-    .get('/api/things/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .query({ page: 2 })
-    .reply(200, {
-      count: 3,
-      next: 'https://fake.api/api/things/?page=3',
-      previous: 'https://fake.api/api/things/?page=1',
-      results: [{ two: 2 }],
-    });
-
+  mocker.login().addThingsPageOne().addThingsPageTwo();
   const scopeUnused = nock('https://fake.api')
     .get('/api/things/')
     .basicAuth({ user: 'secret-id', pass: 'secret-password' })
