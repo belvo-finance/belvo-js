@@ -60,22 +60,32 @@ class Mocker {
     return this;
   }
 
-  paginatedThings() {
+  replyWithPaginatedThings() {
     this.addThingsPageOne().addThingsPageTwo().addThingsPageThree();
     return this;
   }
 
-  addPostThings() {
+  replyToPostThings(replyCode, replyWith) {
     this.scope
       .post('/api/things/', { foo: 'bar' })
-      .basicAuth({ user: 'secret-id', pass: 'secret-password' });
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(replyCode, replyWith);
     return this;
   }
 
-  addDeleteThings() {
+  replyToDeleteThings(replyCode) {
     this.scope
       .delete('/api/things/666/')
-      .basicAuth({ user: 'secret-id', pass: 'secret-password' });
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(replyCode);
+    return this;
+  }
+
+  replyToGetThing(replyCode, replyWith = null) {
+    this.scope
+      .get('/api/things/666/')
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(replyCode, replyWith);
     return this;
   }
 }
@@ -106,7 +116,7 @@ test('incorrect login returns false', async () => {
 });
 
 test('getAll() supports pagination', async () => {
-  mocker.login().paginatedThings();
+  mocker.login().replyWithPaginatedThings();
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
@@ -144,7 +154,7 @@ test('list obeys limit', async () => {
 });
 
 test('list without limit gets everything', async () => {
-  mocker.login().paginatedThings();
+  mocker.login().replyWithPaginatedThings();
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
@@ -155,11 +165,7 @@ test('list without limit gets everything', async () => {
 });
 
 test('get by id works ok', async () => {
-  mocker.login();
-  mocker.scope
-    .get('/api/things/666/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(200, { id: 666, one: 1 });
+  mocker.login().replyToGetThing(200, { id: 666, one: 1 });
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
@@ -172,11 +178,7 @@ test('get by id works ok', async () => {
 
 
 test('get handles error', async () => {
-  mocker.login();
-  mocker.scope
-    .get('/api/things/666/')
-    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-    .reply(404);
+  mocker.login().replyToGetThing(404);
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
@@ -188,8 +190,7 @@ test('get handles error', async () => {
 });
 
 test('post returns map when ok', async () => {
-  mocker.login().addPostThings();
-  mocker.scope.reply(200, { id: 666, foo: 'bar' });
+  mocker.login().replyToPostThings(200, { id: 666, foo: 'bar' });
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
@@ -201,9 +202,11 @@ test('post returns map when ok', async () => {
 });
 
 test('post handles error ', async () => {
-  mocker.login().addPostThings();
-  mocker.scope
-    .reply(400, [{ code: 'wrong_foo', detail: 'Foo cannot be Bar', field: 'foo' }]);
+  mocker
+    .login()
+    .replyToPostThings(400, [
+      { code: 'wrong_foo', detail: 'Foo cannot be Bar', field: 'foo' },
+    ]);
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
@@ -247,8 +250,7 @@ test('put returns map when ok', async () => {
 });
 
 test('delete returns true when ok', async () => {
-  mocker.login().addDeleteThings();
-  mocker.scope.reply(204);
+  mocker.login().replyToDeleteThings(204);
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
@@ -259,8 +261,7 @@ test('delete returns true when ok', async () => {
 });
 
 test('delete returns false when not ok', async () => {
-  mocker.login().addDeleteThings();
-  mocker.scope.reply(404);
+  mocker.login().replyToDeleteThings(404);
 
   const session = new APISession('https://fake.api');
   await session.login('secret-id', 'secret-password');
