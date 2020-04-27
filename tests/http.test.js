@@ -1,6 +1,6 @@
 import nock from 'nock';
-import APISession from './http';
-import RequestError from './exceptions';
+import APISession from '../src/http';
+import RequestError from '../src/exceptions';
 
 
 class Mocker {
