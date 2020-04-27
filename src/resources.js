@@ -11,7 +11,7 @@ class Resource {
   }
 
   async detail(id) {
-    const result = await this.session.detail(this.#endpoint, id);
+    const result = await this.session.get(this.#endpoint, id);
     return result;
   }
 

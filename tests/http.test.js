@@ -1,5 +1,5 @@
 import nock from 'nock';
-import APIMocker from './fixtures';
+import { APIMocker, newSession } from './fixtures';
 import APISession from '../src/http';
 import RequestError from '../src/exceptions';
 
@@ -77,13 +77,6 @@ class Mocker extends APIMocker {
 }
 
 const mocker = new Mocker('https://fake.api');
-
-const newSession = async () => {
-  const apiSession = new APISession('https://fake.api');
-  await apiSession.login('secret-id', 'secret-password');
-  return apiSession;
-};
-
 
 beforeEach(async () => {
   nock.cleanAll();

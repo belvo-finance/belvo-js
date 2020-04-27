@@ -1,4 +1,5 @@
 import nock from 'nock';
+import APISession from '../src/http';
 
 
 class APIMocker {
@@ -18,4 +19,10 @@ class APIMocker {
   }
 }
 
-export default APIMocker;
+const newSession = async () => {
+  const apiSession = new APISession('https://fake.api');
+  await apiSession.login('secret-id', 'secret-password');
+  return apiSession;
+};
+
+export { APIMocker, newSession };

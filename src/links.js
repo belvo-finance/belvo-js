@@ -1,24 +1,18 @@
 import Resource from './resources';
 
 class Link extends Resource {
-  #endpoint = 'links/';
+  #endpoint = 'api/links/';
 
-  static #SINGLE = 'single';
+  static SINGLE = 'single';
 
-  static #RECURRENT = 'recurrent';
-
-  validateAccessMode() {
-    if (!(this.accessMode in [Link.#SINGLE, Link.#RECURRENT])) {
-      throw Error('Invalid accessMode given.');
-    }
-  }
+  static RECURRENT = 'recurrent';
 
   async register(
-    institution, username, password, password2 = null, accessMode = Link.#SINGLE, options = {},
+    institution, username, password, options = {},
   ) {
-    const { token, encryptionKey, usernameType } = options;
-
-    this.validateAccessMode();
+    const {
+      token, encryptionKey, usernameType, password2, accessMode,
+    } = options;
 
     const result = await this.session.post(
       this.#endpoint, {
@@ -28,16 +22,16 @@ class Link extends Resource {
         password2,
         token,
         encryption_key: encryptionKey,
-        accessMode,
-        usernameType,
+        access_mode: accessMode ?? Link.SINGLE,
+        username_type: usernameType,
 
       },
     );
     return result;
   }
 
-  async update(id, password, password2 = null, options = {}) {
-    const { token, encryptionKey } = options;
+  async update(id, password, options = {}) {
+    const { token, encryptionKey, password2 } = options;
     const result = await this.session.put(this.#endpoint, id, {
       password, password2, token, encryption_key: encryptionKey,
     });
