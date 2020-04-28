@@ -16,7 +16,7 @@ const owner = {
 
 const linkId = 'ef68519c-8004-4a8d-a74a-2a64c3cdc778';
 
-class OwnerssAPIMocker extends APIMocker {
+class OwnersAPIMocker extends APIMocker {
   replyWithListOfowners() {
     this.scope
       .get('/api/owners/')
@@ -71,7 +71,7 @@ class OwnerssAPIMocker extends APIMocker {
   }
 }
 
-const mocker = new OwnerssAPIMocker('https://fake.api');
+const mocker = new OwnersAPIMocker('https://fake.api');
 
 beforeEach(async () => {
   nock.cleanAll();
