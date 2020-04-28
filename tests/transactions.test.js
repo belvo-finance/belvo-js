@@ -164,7 +164,7 @@ test('can retrieve transactions with options', async () => {
   expect(mocker.scope.isDone()).toBeTruthy();
 });
 
-test('can see account detail', async () => {
+test('can see transaction detail', async () => {
   mocker.login().replyToTransactionsDetail();
 
   const session = await newSession();
@@ -174,7 +174,7 @@ test('can see account detail', async () => {
   expect(result).toEqual(transaction);
 });
 
-test('can delete account', async () => {
+test('can delete transaction', async () => {
   mocker.login().replyToDeleteTransaction();
 
   const session = await newSession();
@@ -185,7 +185,7 @@ test('can delete account', async () => {
   expect(mocker.scope.isDone).toBeTruthy();
 });
 
-test('can resume account session', async () => {
+test('can resume transaction session', async () => {
   mocker.login().replyToResumeSession();
 
   const session = await newSession();
