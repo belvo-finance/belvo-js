@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint ./src",
     "build": "babel src -d lib",
-    "test": "jest ./tests"
+    "test": "jest ./tests",
+    "generate-docs": "jsdoc --readme ./README.md --package ./package.json -c jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -30,12 +31,12 @@
     "@babel/preset-env": "^7.9.5",
     "babel-eslint": "^11.0.0-beta.2",
     "coveralls": "^3.0.11",
-    "docdash": "^1.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "jest": "^25.3.0",
     "jsdoc": "^3.6.4",
+    "minami": "^1.2.3",
     "nock": "^12.0.3"
   },
   "dependencies": {
