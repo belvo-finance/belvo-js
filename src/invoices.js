@@ -1,8 +1,25 @@
 import Resource from './resources';
 
+/**
+ * An Invoice is the representation of an electronic invoice,
+ * that can be received or sent, by a business or an individual
+ * and has been uploaded to the fiscal institution website.
+ *
+ * @extends Resource
+ */
 class Invoice extends Resource {
   #endpoint = 'api/invoices/'
 
+  /**
+   * Retrieve invoices information from a specific fiscal link.
+   * You can ask for a maximum of 1 year of invoices per request,
+   * if you need more you need to do multiple requests.
+   *
+   * @param {string} link UUID4 representation of a link Id.
+   * @param {string} dateFrom - Required date from, format is YYYY-MM-DD.
+   * @param {string} dateTo - Required date to, format is YYYY-MM-DD.
+   * @param {object} options - Optional parameters (token, encryptionKey, saveData, attachXML)
+   */
   async retrieve(link, dateFrom, dateTo, options = {}) {
     const {
       token, encryptionKey, saveData, attachXML,
