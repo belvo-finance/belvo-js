@@ -1,11 +1,26 @@
 import Resource from './resources';
 
-/** A Link is a set of credentials associated to a end-user access to an Institution. */
+/**
+ * A Link is a set of credentials associated to a end-user access to an Institution.
+ * @extends Resource
+ * */
 class Link extends Resource {
+  /**
+   * Links endpoint.
+   * @private
+   */
   #endpoint = 'api/links/';
 
+  /**
+   * @constant {string}
+   * @static
+   * */
   static SINGLE = 'single';
 
+  /**
+   * @constant {string}
+   * @static
+   */
   static RECURRENT = 'recurrent';
 
   /**
