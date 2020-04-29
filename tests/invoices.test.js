@@ -21,7 +21,7 @@ const invoice = {
   invoice_details: [
     {
       collected_at: '2019-09-27T13:01:41.941Z',
-      description: 'December 2019 accounting fees',
+      description: 'December 2019 invoiceing fees',
       product_identification: '84101600',
       quantity: 1,
       unit_amount: 200,
@@ -153,7 +153,7 @@ test('can retrieve invoices with options', async () => {
   expect(mocker.scope.isDone()).toBeTruthy();
 });
 
-test('can see account detail', async () => {
+test('can see invoice detail', async () => {
   mocker.login().replyToInvoicesDetail();
 
   const session = await newSession();
@@ -163,7 +163,7 @@ test('can see account detail', async () => {
   expect(result).toEqual(invoice);
 });
 
-test('can delete account', async () => {
+test('can delete invoice', async () => {
   mocker.login().replyToDeleteInvoice();
 
   const session = await newSession();
@@ -174,7 +174,7 @@ test('can delete account', async () => {
   expect(mocker.scope.isDone).toBeTruthy();
 });
 
-test('can resume account session', async () => {
+test('can resume invoice session', async () => {
   mocker.login().replyToResumeSession();
 
   const session = await newSession();
