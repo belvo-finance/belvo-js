@@ -10,14 +10,18 @@ import RequestError from './exceptions';
  * @async
  * @param {function} fn - Function that will perform a request
  * @returns {object} Response
- * @throws {RequestError}
+ * @throws {RequestError|Error}
  */
 async function raiseForStatus(fn) {
   try {
     const { data } = await fn;
     return data;
   } catch (error) {
-    throw new RequestError(error.response.status, error.response.data);
+    if (error.response) {
+      throw new RequestError(error.response.status, error.response.data);
+    } else {
+      throw error;
+    }
   }
 }
 

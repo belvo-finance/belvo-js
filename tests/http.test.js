@@ -74,6 +74,13 @@ class Mocker extends APIMocker {
       .reply(replyCode, replyWith);
     return this;
   }
+
+  replyToWrongLogin() {
+    this.scope.get('/api/')
+      .basicAuth({ user: 'secret-id', pass: 'wrong-password' })
+      .reply(401, [{ code: 'unauthorized', detail: 'Invalid credentials' }]);
+    return this;
+  }
 }
 
 const mocker = new Mocker('https://fake.api');
@@ -91,7 +98,7 @@ test('can login', async () => {
 });
 
 test('incorrect login returns false', async () => {
-  mocker.login();
+  mocker.replyToWrongLogin();
 
   const badSession = new APISession('https://fake.api');
   const login = await badSession.login('secret-id', 'wrong-password');
