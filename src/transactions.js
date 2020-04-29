@@ -1,8 +1,21 @@
 import Resource from './resources';
 
+/**
+ * A Transaction contains the detailed information of each movement inside an Account.
+ * @extends Resource
+ */
 class Transaction extends Resource {
   #endpoint = 'api/transactions/'
 
+  /**
+   * Retrieve transactions from a specific account or all accounts from a specific link.
+   * @async
+   * @param {string} link - UUID4 representation of a Link Id.
+   * @param {string} dateFrom - Required date from, format is YYYY-MM-DD.
+   * @param {object} options - Optional parameters (dateTo, token, encryptionKey, saveData)
+   * @returns {object} Response
+   * @throws {RequestError}
+   */
   async retrieve(link, dateFrom, options = {}) {
     const {
       dateTo, token, encryptionKey, saveData,
