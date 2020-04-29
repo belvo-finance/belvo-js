@@ -15,10 +15,13 @@ class Invoice extends Resource {
    * You can ask for a maximum of 1 year of invoices per request,
    * if you need more you need to do multiple requests.
    *
+   * @async
    * @param {string} link UUID4 representation of a link Id.
    * @param {string} dateFrom - Required date from, format is YYYY-MM-DD.
    * @param {string} dateTo - Required date to, format is YYYY-MM-DD.
    * @param {object} options - Optional parameters (token, encryptionKey, saveData, attachXML)
+   * @returns {object} Response
+   * @throws {RequestError}
    */
   async retrieve(link, dateFrom, dateTo, options = {}) {
     const {
