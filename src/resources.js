@@ -48,6 +48,7 @@ class Resource {
   /**
    * Resume a "pending" session that requires an OTP token.
    * Use this function to resume sessions that returned HTTP 428 status code.
+   * @async
    * @param {string} session - UUID4 representation of a "pending" session.
    * @param {string} token - OTP token.
    * @param {string} link - UUID4 representation of the link being used.
