@@ -11,3 +11,4 @@ jsdoc.json
 .babelrc
 .editorconfig
 .github
+src/
