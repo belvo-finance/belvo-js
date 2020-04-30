@@ -1,6 +1,6 @@
 {
   "name": "belvo",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The node.js module for the Belvo API",
   "main": "lib/belvo.js",
   "scripts": {
