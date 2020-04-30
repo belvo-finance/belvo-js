@@ -23,14 +23,15 @@ var client = new belvo(
   'https://sandbox.belvo.co'
 );
 
-client.connect().then(() => {
-  client.links.list()
-    .then(function (res) => {
-      console.log(res);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+client.connect()
+  .then(function () {
+    client.links.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 });
 ```
 Or if you prefer to use ES6 and async/await
