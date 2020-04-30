@@ -2,7 +2,7 @@
   "name": "belvo",
   "version": "0.0.1",
   "description": "The node.js module for the Belvo API",
-  "main": "index.js",
+  "main": "belvo.js",
   "scripts": {
     "lint": "eslint ./src",
     "build": "babel src -d lib",
