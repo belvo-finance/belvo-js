@@ -32,7 +32,7 @@ class APISession {
    * @param {string} url - Belvo API host URL.
    */
   constructor(url) {
-    const version = '0.0.2';
+    const version = '0.0.3';
     this.session = axios.create({
       baseURL: url,
       headers: {
