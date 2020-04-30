@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-
 import axios from 'axios';
+import { version } from '../package.json';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import RequestError from './exceptions';
@@ -32,7 +32,6 @@ class APISession {
    * @param {string} url - Belvo API host URL.
    */
   constructor(url) {
-    const version = '0.0.3';
     this.session = axios.create({
       baseURL: url,
       headers: {
