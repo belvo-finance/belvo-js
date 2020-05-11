@@ -8,4 +8,5 @@ const encodeFileB64 = (path) => {
   return null;
 };
 
+// eslint-disable-next-line import/prefer-default-export
 export { encodeFileB64 };
