@@ -1,4 +1,5 @@
 import Resource from './resources';
+import { encodeFileB64 } from './utils';
 
 /**
  * A Link is a set of credentials associated to a end-user access to an Institution.
@@ -30,7 +31,7 @@ class Link extends Resource {
    * @param {string} username - Username used to sign in online by the end-user.
    * @param {string} password - Password used to sign in online by the end-user.
    * @param {object} options - Optional parameters
-   *   (token, encriptionKey, usernameType, password2, accessMode).
+   *   (token, encriptionKey, usernameType, password2, accessMode, certificate, privateKey).
    * @returns {object} Newly created link.
    * @throws {RequestError}
    */
@@ -40,7 +41,11 @@ class Link extends Resource {
     const {
       token, encryptionKey, usernameType, password2, accessMode,
     } = options;
-
+    let {
+      certificate, privateKey,
+    } = options;
+    certificate = certificate ? encodeFileB64(certificate) : certificate;
+    privateKey = privateKey ? encodeFileB64(privateKey) : privateKey;
     const result = await this.session.post(
       this.#endpoint, {
         institution,
@@ -51,7 +56,8 @@ class Link extends Resource {
         encryption_key: encryptionKey,
         access_mode: accessMode ?? Link.SINGLE,
         username_type: usernameType,
-
+        certificate,
+        private_key: privateKey,
       },
     );
     return result;
@@ -64,14 +70,28 @@ class Link extends Resource {
    * @async
    * @param {string} id - UUID4 representation of the link Id.
    * @param {string} password - New password.
-   * @param {object} options - Optional parameters (token, encryptionKey, password2).
+   * @param {object} options - Optional parameters
+   *  (token, encryptionKey, password2, usernameType, certificate, privateKey).
    * @returns {object} Response
    * @throws {RequestError}
    */
-  async update(id, password, options = {}) {
-    const { token, encryptionKey, password2 } = options;
+  async update(id, options = {}) {
+    const {
+      token, encryptionKey, password, password2, usernameType,
+    } = options;
+    let {
+      certificate, privateKey,
+    } = options;
+    certificate = certificate ? encodeFileB64(certificate) : certificate;
+    privateKey = privateKey ? encodeFileB64(privateKey) : privateKey;
     const result = await this.session.put(this.#endpoint, id, {
-      password, password2, token, encryption_key: encryptionKey,
+      password,
+      password2,
+      token,
+      encryption_key: encryptionKey,
+      username_type: usernameType,
+      certificate,
+      private_key: privateKey,
     });
     return result;
   }

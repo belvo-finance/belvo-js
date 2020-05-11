@@ -64,6 +64,8 @@ class LinksAPIMocker extends APIMocker {
           token: 'token123',
           encryption_key: '123pollitoingles',
           username_type: '02',
+          certificate: 'dGVzdCBmaWxlCg==',
+          private_key: 'dGVzdCBmaWxlCg==',
         },
       )
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
@@ -137,6 +139,8 @@ test('can register a link with options', async () => {
     token: 'token123',
     encryptionKey: '123pollitoingles',
     usernameType: '02',
+    certificate: `${__dirname}/test_file.txt`,
+    privateKey: `${__dirname}/test_file.txt`,
   };
   const result = await links.register('banamex_mx_retail', 'johndoe', '123asd', options);
 
@@ -170,7 +174,7 @@ test('can update link', async () => {
 
   const session = await newSession();
   const links = new Link(session);
-  const result = await links.update(singleLink.id, 'new-password');
+  const result = await links.update(singleLink.id, { password: 'new-password' });
 
   expect(result).toEqual(singleLink);
   expect(mocker.scope.isDone()).toBeTruthy();
