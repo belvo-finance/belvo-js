@@ -62,6 +62,8 @@ class APISession {
       return false;
     }
     this.session.defaults.auth = auth;
+    this.keyId = secretKeyId;
+    this.keyPassword = secretKeyPassword;
     return true;
   }
 
