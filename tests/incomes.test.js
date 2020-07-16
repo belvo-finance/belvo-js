@@ -33,6 +33,18 @@ class IncomesAPIMocker extends APIMocker {
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(201, incomesResp);
   }
+
+  replyToCreateIncomesWithOptions() {
+    this.scope
+      .post('/api/incomes/', {
+        link: linkId,
+        save_data: false,
+        encryption_key: '123pollitoingles',
+      })
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(200, incomesResp);
+  }
+
 }
 
 const mocker = new IncomesAPIMocker('https://fake.api');
@@ -52,3 +64,17 @@ test('can retrieve incomes', async () => {
   expect(mocker.scope.isDone()).toBeTruthy();
 });
 
+test('can retrieve incomes with options', async () => {
+  mocker.login().replyToCreateIncomesWithOptions();
+
+  const session = await newSession();
+  const incomes = new Income(session);
+  const options = {
+    encryptionKey: '123pollitoingles',
+    saveData: false,
+  };
+  const result = await incomes.retrieve(linkId, options);
+
+  expect(result).toEqual(incomesResp);
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
