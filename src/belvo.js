@@ -6,6 +6,7 @@ import Invoice from './invoices';
 import Link from './links';
 import Owner from './owners';
 import Statement from './statements';
+import Income from './incomes';
 import TaxReturn from './taxReturns';
 import TaxStatus from './taxStatus';
 import Transaction from './transactions';
@@ -34,6 +35,7 @@ class Client {
     this.taxReturns = new TaxReturn(this.session);
     this.taxStatus = new TaxStatus(this.session);
     this.statements = new Statement(this.session);
+    this.incomes = new Income(this.session);
     this.widgetToken = new WidgetToken(this.session);
   }
 }
