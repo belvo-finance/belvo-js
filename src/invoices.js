@@ -33,6 +33,7 @@ class Invoice extends Resource {
       token,
       date_from: dateFrom,
       date_to: dateTo,
+      type,
       encryption_key: encryptionKey,
       save_data: saveData,
       attach_xml: attachXML,
