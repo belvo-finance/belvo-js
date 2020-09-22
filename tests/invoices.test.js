@@ -6,7 +6,7 @@ const invoice = {
   id: '076c66e5-90f5-4e01-99c7-50e32f65ae42',
   link: '30cb4806-6e00-48a4-91c9-ca55968576c8',
   collected_at: '2019-09-27T13:01:41.941Z',
-  type: 'Ingreso',
+  type: 'INFLOW',
   invoice_identification: 'A1A1A1A1-2B2B-3C33-D44D-555555E55EE',
   invoice_date: '2019-12-01',
   sender_id: 'AAA111111AA11',
@@ -81,7 +81,12 @@ class InvoicesAPIMocker extends APIMocker {
 
   replyToCreateInvoice() {
     this.scope
-      .post('/api/invoices/', { link: linkId, date_from: '2019-10-20', date_to: '2019-12-01' })
+      .post('/api/invoices/', {
+        link: linkId,
+        date_from: '2019-10-20',
+        date_to: '2019-12-01',
+        type: 'INFLOW',
+      })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(201, invoice);
   }
@@ -92,6 +97,7 @@ class InvoicesAPIMocker extends APIMocker {
         link: linkId,
         date_from: '2019-10-20',
         date_to: '2019-12-01',
+        type: 'INFLOW',
         save_data: false,
         encryption_key: '123pollitoingles',
         token: 'token123',
@@ -130,7 +136,7 @@ test('can retrieve invoices', async () => {
 
   const session = await newSession();
   const invoices = new Invoice(session);
-  const result = await invoices.retrieve(linkId, '2019-10-20', '2019-12-01');
+  const result = await invoices.retrieve(linkId, '2019-10-20', '2019-12-01', 'INFLOW');
 
   expect(result).toEqual(invoice);
   expect(mocker.scope.isDone()).toBeTruthy();
@@ -147,7 +153,7 @@ test('can retrieve invoices with options', async () => {
     saveData: false,
     attachXML: false,
   };
-  const result = await invoices.retrieve(linkId, '2019-10-20', '2019-12-01', options);
+  const result = await invoices.retrieve(linkId, '2019-10-20', '2019-12-01', 'INFLOW', options);
 
   expect(result).toEqual(invoice);
   expect(mocker.scope.isDone()).toBeTruthy();
