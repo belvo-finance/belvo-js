@@ -39,6 +39,19 @@ test('belvo client has statements', async () => {
   expect(client.statements).not.toBeNull();
 });
 
+test('belvo client has incomes', async () => {
+  expect(client.incomes).not.toBeNull();
+});
+
 test('belvo client has tax returns', async () => {
   expect(client.taxReturns).not.toBeNull();
+});
+
+test('belvo client has tax status', async () => {
+  expect(client.taxStatus).not.toBeNull();
+});
+
+
+test('belvo client has widgetToken', async () => {
+  expect(client.widgetToken).not.toBeNull();
 });
