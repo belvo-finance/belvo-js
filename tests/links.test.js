@@ -4,6 +4,7 @@ import Link from '../src/links';
 
 const singleLink = { id: 'ef68519c-8004-4a8d-a74a-2a64c3cdc778', institution: 'banamex_mx_retail', saccess_mode: 'single' };
 const recurrentLink = { id: '85946728-96e1-4bd3-9b87-f86f2245b08d', institution: 'banamex_mx_retail', saccess_mode: 'recurrent' };
+const tokenResponse = { refresh: '23456', access: 'abcdef' }
 
 class LinksAPIMocker extends APIMocker {
   replyWithListOfLinks() {
@@ -100,6 +101,13 @@ class LinksAPIMocker extends APIMocker {
       .patch('/api/links/', { session: 'abc123', token: 'my-token', link: singleLink.id })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(200, singleLink);
+  }
+
+  replyToLinkToken() {
+    this.scope
+      .post(`/api/links/${singleLink.id}/token/`, { scopes: 'read_links' })
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(200, tokenResponse);
   }
 }
 
@@ -201,5 +209,16 @@ test('can resume link session', async () => {
   const result = await links.resume('abc123', 'my-token', singleLink.id);
 
   expect(result).toEqual(singleLink);
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
+
+test('can request token with scopes', async () => {
+  mocker.login().replyToLinkToken();
+
+  const session = await newSession();
+  const links = new Link(session);
+  const result = await links.token(singleLink.id, 'read_links');
+
+  expect(result).toEqual(tokenResponse);
   expect(mocker.scope.isDone()).toBeTruthy();
 });

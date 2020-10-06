@@ -97,6 +97,20 @@ class Link extends Resource {
     });
     return result;
   }
+
+  /**
+   * Request scoped tokens to operate with a single link
+   * @async
+   * @param {string} id - UUID4 representation of the link Id.
+   * @param {string} scopes - List of comma separated scopes
+   * @returns {object} Response
+   * @throws {RequestError}
+   */
+  async token(id, scopes) {
+    return this.session.post(`${this.#endpoint}${id}/token/`, {
+      scopes,
+    });
+  }
 }
 
 export default Link;
