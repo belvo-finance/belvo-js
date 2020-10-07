@@ -60,8 +60,8 @@ After checking out the repo, run `npm install` to install dependencies. Then, ru
 
 To release a new version:
 - Use `npm version major|minor|patch` to bump a new version.
-- Create a `tag` matching the new version.
-- Travis pipeline will publish to `npmjs`
+- Create a new pull request for the new version.
+- Once the new version is merged in `master`, create a `tag` matching the new version.
 
 ## Contributing
 
