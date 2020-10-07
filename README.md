@@ -58,7 +58,10 @@ async function getLinks() {
 ## Development
 After checking out the repo, run `npm install` to install dependencies. Then, run `npm test` to run the tests.
 
-To release a new version, use `npm version` to bump a new version, and when all is ready you can upload the new version using `npm publish`.
+To release a new version:
+- Use `npm version major|minor|patch` to bump a new version.
+- Create a `tag` matching the new version.
+- Travis pipeline will publish to `npmjs`
 
 ## Contributing
 
