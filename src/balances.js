@@ -12,13 +12,14 @@ class Balance extends Resource {
    * @async
    * @param {string} link - UUID4 representation of a link Id.
    * @param {string} dateFrom - Required date from, format is YYYY-MM-DD
+   * @param {string} dateTo - Required date to, format is YYYY-MM-DD
    * @param {object} options - Optional parameters (account, dateTo, token, encryptionKey, saveData)
    * @return {object} Response
    * @throws {RequestError}
    */
-  async retrieve(link, dateFrom, options = {}) {
+  async retrieve(link, dateFrom, dateTo, options = {}) {
     const {
-      account, dateTo, token, encryptionKey, saveData,
+      account, token, encryptionKey, saveData,
     } = options;
     const result = await this.session.post(this.#endpoint, {
       link,
