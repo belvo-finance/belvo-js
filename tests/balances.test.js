@@ -1,4 +1,5 @@
 import nock from 'nock';
+import moment from 'moment';
 import { APIMocker, newSession } from './fixtures';
 import Balance from '../src/balances';
 
@@ -50,7 +51,7 @@ class BalancesAPIMocker extends APIMocker {
 
   replyToCreateBalance() {
     this.scope
-      .post('/api/balances/', { link: linkId, date_from: '2019-10-20', date_to: '2019-12-20' })
+      .post('/api/balances/', { link: linkId, date_from: '2019-10-20', date_to: moment().format('YYYY-MM-DD') })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(201, balance);
   }
@@ -60,7 +61,7 @@ class BalancesAPIMocker extends APIMocker {
       .post('/api/balances/', {
         link: linkId,
         date_from: '2019-10-20',
-        date_to: '2019-12-20',
+        date_to: '2019-12-01',
         save_data: false,
         encryption_key: '123pollitoingles',
         token: 'token123',
@@ -99,7 +100,7 @@ test('can retrieve balances', async () => {
 
   const session = await newSession();
   const balances = new Balance(session);
-  const result = await balances.retrieve(linkId, '2019-10-20', '2019-12-20');
+  const result = await balances.retrieve(linkId, '2019-10-20');
 
   expect(result).toEqual(balance);
   expect(mocker.scope.isDone()).toBeTruthy();
@@ -112,11 +113,12 @@ test('can retrieve balances with options', async () => {
   const balances = new Balance(session);
   const options = {
     account: '0d3ffb69-f83b-456e-ad8e-208d0998d71d',
+    dateTo: '2019-12-01',
     token: 'token123',
     encryptionKey: '123pollitoingles',
     saveData: false,
   };
-  const result = await balances.retrieve(linkId, '2019-10-20', '2019-12-20', options);
+  const result = await balances.retrieve(linkId, '2019-10-20', options);
 
   expect(result).toEqual(balance);
   expect(mocker.scope.isDone()).toBeTruthy();

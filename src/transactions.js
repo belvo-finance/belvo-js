@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Resource from './resources';
 
 /**
@@ -18,8 +19,14 @@ class Transaction extends Resource {
    */
   async retrieve(link, dateFrom, options = {}) {
     const {
-      dateTo, token, encryptionKey, saveData,
+      token, encryptionKey, saveData,
     } = options;
+    let {
+      dateTo,
+    } = options;
+    if (!dateTo) {
+      dateTo = moment().format('YYYY-MM-DD');
+    }
     const result = await this.session.post(this.#endpoint, {
       link,
       token,

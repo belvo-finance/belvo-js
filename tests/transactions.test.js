@@ -1,4 +1,5 @@
 import nock from 'nock';
+import moment from 'moment';
 import { APIMocker, newSession } from './fixtures';
 import Transaction from '../src/transactions';
 
@@ -98,7 +99,7 @@ class TransactionsAPIMocker extends APIMocker {
 
   replyToCreateTransaction() {
     this.scope
-      .post('/api/transactions/', { link: linkId, date_from: '2019-10-20' })
+      .post('/api/transactions/', { link: linkId, date_from: '2019-10-20', date_to: moment().format('YYYY-MM-DD') })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(201, transaction);
   }
