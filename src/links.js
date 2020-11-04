@@ -56,7 +56,7 @@ class Link extends Resource {
         password2,
         token,
         encryption_key: encryptionKey,
-        access_mode: accessMode ?? Link.SINGLE,
+        access_mode: accessMode,
         username_type: usernameType,
         certificate,
         private_key: privateKey,

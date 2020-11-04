@@ -52,13 +52,12 @@ class LinksAPIMocker extends APIMocker {
       .reply(201, singleLink);
   }
 
-  replyToCreateSingleLinkWithOptions() {
+  replyToCreateRecurrentLinkWithOptions() {
     this.scope
       .post(
         '/api/links/',
         {
           institution: 'banamex_mx_retail',
-          access_mode: 'single',
           username: 'johndoe',
           username2: 'janedoe',
           password: '123asd',
@@ -71,7 +70,7 @@ class LinksAPIMocker extends APIMocker {
         },
       )
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-      .reply(201, singleLink);
+      .reply(201, recurrentLink);
   }
 
   replyToCreateRecurrentLink() {
@@ -80,7 +79,6 @@ class LinksAPIMocker extends APIMocker {
         '/api/links/',
         {
           institution: 'banamex_mx_retail',
-          access_mode: 'recurrent',
           username: 'johndoe',
           password: '123asd',
         },
@@ -128,18 +126,18 @@ test('can list links', async () => {
 });
 
 test('can register a link', async () => {
-  mocker.login().replyToCreateSingleLink();
+  mocker.login().replyToCreateRecurrentLink();
 
   const session = await newSession();
   const links = new Link(session);
   const result = await links.register('banamex_mx_retail', 'johndoe', '123asd');
 
-  expect(result).toEqual(singleLink);
+  expect(result).toEqual(recurrentLink);
   expect(mocker.scope.isDone()).toBeTruthy();
 });
 
 test('can register a link with options', async () => {
-  mocker.login().replyToCreateSingleLinkWithOptions();
+  mocker.login().replyToCreateRecurrentLinkWithOptions();
 
   const session = await newSession();
   const links = new Link(session);
@@ -154,18 +152,18 @@ test('can register a link with options', async () => {
   };
   const result = await links.register('banamex_mx_retail', 'johndoe', '123asd', options);
 
-  expect(result).toEqual(singleLink);
+  expect(result).toEqual(recurrentLink);
   expect(mocker.scope.isDone()).toBeTruthy();
 });
 
-test('can register a recurrent link', async () => {
-  mocker.login().replyToCreateRecurrentLink();
+test('can register a single link', async () => {
+  mocker.login().replyToCreateSingleLink();
 
   const session = await newSession();
   const links = new Link(session);
-  const result = await links.register('banamex_mx_retail', 'johndoe', '123asd', { accessMode: Link.RECURRENT });
+  const result = await links.register('banamex_mx_retail', 'johndoe', '123asd', { accessMode: Link.SINGLE });
 
-  expect(result).toEqual(recurrentLink);
+  expect(result).toEqual(singleLink);
   expect(mocker.scope.isDone()).toBeTruthy();
 });
 
