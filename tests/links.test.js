@@ -86,7 +86,7 @@ class LinksAPIMocker extends APIMocker {
         },
       )
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
-      .reply(201, singleLink);
+      .reply(201, recurrentLink);
   }
 
   replyToUpdateLink() {
@@ -165,7 +165,7 @@ test('can register a recurrent link', async () => {
   const links = new Link(session);
   const result = await links.register('banamex_mx_retail', 'johndoe', '123asd', { accessMode: Link.RECURRENT });
 
-  expect(result).toEqual(singleLink);
+  expect(result).toEqual(recurrentLink);
   expect(mocker.scope.isDone()).toBeTruthy();
 });
 
