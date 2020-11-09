@@ -107,9 +107,7 @@ class Link extends Resource {
    * @throws {RequestError}
    */
   async token(id, scopes) {
-    return this.session.post(`${this.#endpoint}${id}/token/`, {
-      scopes,
-    });
+    return this.session.post('api/token/', { link_id: id, scopes });
   }
 }
 

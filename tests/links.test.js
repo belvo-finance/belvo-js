@@ -103,7 +103,7 @@ class LinksAPIMocker extends APIMocker {
 
   replyToLinkToken() {
     this.scope
-      .post(`/api/links/${singleLink.id}/token/`, { scopes: 'read_links' })
+      .post('/api/token/', { scopes: 'read_links', link_id: singleLink.id })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(200, tokenResponse);
   }
