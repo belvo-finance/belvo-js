@@ -5,7 +5,17 @@
     <a href="https://coveralls.io/github/belvo-finance/belvo-js"><img alt="Coveralls github" src="https://img.shields.io/coveralls/github/belvo-finance/belvo-js?style=for-the-badge"></a>
     <a href="https://codeclimate.com/github/belvo-finance/belvo-js"><img alt="CodeClimate maintainability" src="https://img.shields.io/codeclimate/maintainability/belvo-finance/belvo-js?style=for-the-badge"></a>
 </p>
-<p align="center"><a href="https://developers.belvo.co">Developers portal</a> | <a href="https://belvo-finance.github.io/belvo-js/index.html">Documentation</a></p>
+
+## 📕 Documentation
+How to use `belvo-js`: https://belvo-finance.github.io/belvo-js/
+
+If you want to check the full documentation about Belvo API: https://docs.belvo.co
+
+Or if you want to more information about:
+* ![Getting Belvo API keys](https://developers.belvo.com/docs/get-your-belvo-api-keys)
+* ![Using Connect Widget](https://developers.belvo.com/docs/connect-widget)
+* ![Testing in sandbox](https://developers.belvo.com/docs/test-in-sandbox)
+* ![Using webhooks and recurrent links](https://developers.belvo.com/docs/webhooks)
 
 ## Installation
 Install the package using npm
