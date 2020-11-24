@@ -73,6 +73,9 @@ To release a new version:
 - Create a new pull request for the new version.
 - Once the new version is merged in `master`, create a `tag` matching the new version.
 
+### Linting
+Make sure to run `npm run lint`. Otherwise the build will break. 
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/belvo-finance/belvo-js. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/belvo-finance/belvo-js/blob/master/CODE_OF_CONDUCT.md).
