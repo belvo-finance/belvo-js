@@ -60,6 +60,7 @@ class LinksAPIMocker extends APIMocker {
           institution: 'banamex_mx_retail',
           username: 'johndoe',
           username2: 'janedoe',
+          username3: 'foo',
           password: '123asd',
           password2: 'asd123',
           token: 'token123',
@@ -143,6 +144,7 @@ test('can register a link with options', async () => {
   const links = new Link(session);
   const options = {
     username2: 'janedoe',
+    username3: 'foo',
     password2: 'asd123',
     token: 'token123',
     encryptionKey: '123pollitoingles',

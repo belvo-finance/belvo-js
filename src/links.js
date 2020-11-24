@@ -31,7 +31,7 @@ class Link extends Resource {
    * @param {string} username - Username used to sign in online by the end-user.
    * @param {string} password - Password used to sign in online by the end-user.
    * @param {object} options - Optional parameters
-   *   (token, encryptionKey, usernameType, username2, password2, accessMode, certificate,
+   *   (token, encryptionKey, usernameType, username2, username3, password2, accessMode, certificate,
    *    privateKey).
    * @returns {object} Newly created link.
    * @throws {RequestError}
@@ -40,7 +40,7 @@ class Link extends Resource {
     institution, username, password, options = {},
   ) {
     const {
-      token, encryptionKey, usernameType, username2, password2, accessMode,
+      token, encryptionKey, usernameType, username2, username3, password2, accessMode,
     } = options;
     let {
       certificate, privateKey,
@@ -52,6 +52,7 @@ class Link extends Resource {
         institution,
         username,
         username2,
+        username3,
         password,
         password2,
         token,
