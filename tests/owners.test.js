@@ -9,7 +9,7 @@ const owner = {
   last_name: 'Doe',
   second_last_name: 'Smith',
   phone_number: '+52-XXX-XXX-XXXX',
-  email: 'johndoe@belvo.co',
+  email: 'johndoe@belvo.com',
   address: 'Carrer de la Llacuna, 162, 08018 Barcelona',
   collected_at: '2019-09-27T13:01:41.941Z',
 };

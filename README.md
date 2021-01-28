@@ -9,7 +9,7 @@
 ## 📕 Documentation
 How to use `belvo-js`: https://belvo-finance.github.io/belvo-js/
 
-If you want to check the full documentation about Belvo API: https://docs.belvo.co
+If you want to check the full documentation about Belvo API: https://docs.belvo.com
 
 Or if you want to more information about:
 * [Getting Belvo API keys](https://developers.belvo.com/docs/get-your-belvo-api-keys)
@@ -30,7 +30,7 @@ var belvo = require("belvo").default;
 var client = new belvo(
   'YOUR-KEY-ID',
   'YOUR-SECRET',
-  'https://sandbox.belvo.co'
+  'https://sandbox.belvo.com'
 );
 
 client.connect()
@@ -52,7 +52,7 @@ import Client from 'belvo';
 const client = new Client(
   'YOUR-KEY-ID',
   'YOUR-SECRET',
-  'https://sandbox.belvo.co'
+  'https://sandbox.belvo.com'
 );
 
 async function getLinks() {

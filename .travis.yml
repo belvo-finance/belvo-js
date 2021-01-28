@@ -11,7 +11,7 @@ before_deploy:
 - npm run build
 deploy:
   provider: npm
-  email: sdks@belvo.co
+  email: sdks@belvo.com
   api_key:
     secure: JFzWX0aYcoXT2d2gQCgJqJXufIlqoBi9P2AoMpxA/WEANXySJzYMQ1x7k+ngruaqdXmrGBbGp/Tq9EMsSRv6WgUAXhXGv7X5QkTWHgHORFU6ik60/HBXd8imsJsmX5tvo5WNWSTzVhPHA8JAFFABzap9ujLCLGodBKMBB6KNYvSRjexwE5NqU1Jsfgeuzi3/Tx0B/kOaP5fGxVrR0k85kf8H4eLmzYGl5uydJDEfQjX91LCC/BUZQfu4qN0+I9krIyctxivwENLHVHNmdzhd293hotKIP/LL383yKBKZy/oaMN2hg7H7DaTZqpfhPYuJw2ekjJpRcGoGD3h4HrM7ulatYMO7ElJD8NeKAbbNbB2ajfO/wazM9XPK/PCeYZ7s1TQ2RBV004WsYpSJPMms+eXBRLRDV5D6hUArmRiSaFa/cNdLH51Cg350aTs4GYM1SF1C8MlqyPIjx2w0TEy2hi776CwqbvkgwfN+l0zLz87K1sDUgUDA9hqUbNk7OL5k3cNzC2Qsk+/m4BPixATAh5/H3vb4Uv0PsdY93jSgzcuJv+KAsc5Rly4eT/TykyLh7Z9JxcWKv3mecETYP3ZevYDjOAq7atv4R+HM7zQK88HeHJFkTFUbsU5GOlu2PSt1rRkfxTk1hnN++lTigzXvhXKxNYjCUl90QOJg0BfvhCQ=
   on:
