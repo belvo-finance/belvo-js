@@ -10,7 +10,7 @@ class TokenAPIMocker extends APIMocker {
       .post('/api/token/', {
         id: 'secret-id',
         password: 'secret-password',
-        scopes: 'read_institutions,write_links,read_links,delete_links'
+        scopes: 'read_institutions,write_links,read_links'
       })
       .reply(200, token);
     return this;
@@ -21,7 +21,7 @@ class TokenAPIMocker extends APIMocker {
       .post('/api/token/', {
         id: 'secret-id',
         password: 'secret-password',
-        scopes: 'read_institutions,write_links,read_links,delete_links',
+        scopes: 'read_institutions,write_links,read_links',
         link_id: 'link-uuid'
       })
       .reply(200, token);
