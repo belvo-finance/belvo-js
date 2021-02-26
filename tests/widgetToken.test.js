@@ -38,7 +38,24 @@ class TokenAPIMocker extends APIMocker {
       .reply(200, token);
     return this;
   }
+
+  replyWithATokenWithWidgetBranding() {
+    this.scope
+      .post('/api/token/', {
+        id: 'secret-id',
+        password: 'secret-password',
+        scopes: 'read_institutions',
+        widget: {
+          branding: {
+            test: "test"
+          }
+        }
+      })
+      .reply(200, token);
+    return this;
+  }
 }
+
 
 const mocker = new TokenAPIMocker('https://fake.api');
 
@@ -73,6 +90,22 @@ test('can get a token with specific scopes', async () => {
   const session = await newSession();
   const widgetTokenResource = new WidgetToken(session);
   const options = {scopes: 'read_institutions'};
+  const result = await widgetTokenResource.create(options);
+
+  expect(result).toEqual(token);
+});
+
+test('can get a token with widget branding', async () => {
+  mocker.login().replyWithATokenWithWidgetBranding();
+
+  const session = await newSession();
+  const widgetTokenResource = new WidgetToken(session);
+  const widgetBranding = {
+    branding: {
+      test: 'test'
+    }
+  }
+  const options = {scopes: 'read_institutions', widget: widgetBranding};
   const result = await widgetTokenResource.create(options);
 
   expect(result).toEqual(token);

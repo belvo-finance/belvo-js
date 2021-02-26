@@ -18,6 +18,7 @@ class WidgetToken extends Resource {
   async create(options = {}) {
     let { scopes } = options;
     const { link } = options;
+    const { widget } = options;
     scopes = scopes || 'read_institutions,write_links,read_links';
     const result = await this.session.post(
       this.#endpoint, {
@@ -25,6 +26,7 @@ class WidgetToken extends Resource {
         password: this.session.keyPassword,
         link_id: link,
         scopes,
+        widget,
       },
     );
     return result;
