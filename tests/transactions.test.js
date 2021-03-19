@@ -119,6 +119,19 @@ class TransactionsAPIMocker extends APIMocker {
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(200, transaction);
   }
+
+  replyWithFilters() {
+    this.scope
+      .get('/api/transactions/')
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .query({ amount__gte: 100, type: 'INFLOW' })
+      .reply(200, {
+        count: 100,
+        next: null,
+        previous: null,
+        results: [transaction]
+      });
+  }
 }
 
 const mocker = new TransactionsAPIMocker('https://fake.api');
@@ -194,5 +207,19 @@ test('can resume transaction session', async () => {
   const result = await transactions.resume('abc123', 'my-token', linkId);
 
   expect(result).toEqual(transaction);
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
+
+test('can list transactions given filters', async () => {
+  mocker.login().replyWithFilters()
+
+  const session = await newSession();
+  const transactions = new Transaction(session);
+  const result = await transactions.list({
+    limit: 5,
+    filters: { amount__gte: 100, type: 'INFLOW' }
+  });
+
+  expect(result).toEqual([transaction]);
   expect(mocker.scope.isDone()).toBeTruthy();
 });

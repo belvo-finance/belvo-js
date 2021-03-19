@@ -54,7 +54,6 @@ class APISession {
       password: secretKeyPassword,
     };
 
-
     try {
       await raiseForStatus(this.session.get('/api/', { auth }));
     } catch (error) {
@@ -71,10 +70,11 @@ class APISession {
    * Get all results from a paginated response
    * @async
    * @param {string} url - API endpoint
+   * @param {object} params - Params to filter results in get.
    * @yields {object} The next result in the response.
    */
-  async* getAll(url) {
-    const { data: { results, next } } = await this.session.get(url);
+  async* getAll(url, params = {}) {
+    const { data: { results, next } } = await this.session.get(url, { params });
 
     // eslint-disable-next-line no-restricted-syntax
     for (const item of results) {
@@ -91,11 +91,12 @@ class APISession {
    * @async
    * @param {string} url - API endpoint
    * @param {number} limit - Maximum number of results to get.
+   * @param {object} params - Params to filter results in get.
    * @returns {array} List of resources.
    */
-  async list(url, limit = 100) {
+  async list(url, limit = 100, params = {}) {
     const results = [];
-    const generator = await this.getAll(url);
+    const generator = await this.getAll(url, params);
     for (let index = 0; index < limit; index += 1) {
       // eslint-disable-next-line no-await-in-loop
       const next = await generator.next();

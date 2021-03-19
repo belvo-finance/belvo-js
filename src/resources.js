@@ -13,12 +13,14 @@ class Resource {
   /**
    * Get a list of resources.
    * @async
-   * @param {number} limit - Maximum number of results.
+   * @param {Object} params - Receives two parameters.
+   * @param {number} [params.limit=100] - Maximum number of results.
+   * @param {Object} [params.filters={}] - Filters to get custom results.
    * @returns {array} List of results.
    * @throws {RequestError}
    */
-  async list(limit = 100) {
-    const result = await this.session.list(this.#endpoint, limit);
+  async list({ limit = 100, filters = {} } = {}) {
+    const result = await this.session.list(this.#endpoint, limit, filters);
     return result;
   }
 

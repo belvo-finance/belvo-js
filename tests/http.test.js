@@ -243,3 +243,25 @@ test('delete returns false when not ok', async () => {
   expect(result).toBeFalsy();
   expect(mocker.scope.isDone()).toBeTruthy();
 });
+
+test('get results by filters', async () => {
+  mocker.login();
+
+  const scopeUnused = nock('https://fake.api')
+    .get('/api/things/')
+    .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+    .query({ foo: 'bar' })
+    .reply(200, {
+      count: 3,
+      next: 'https://fake.api/api/things/?foo=bar&page=2',
+      previous: 'https://fake.api/api/things/?foo=bar&page=1',
+      results: [{ one: 1}, { two: 2 }]
+    });
+
+  const session = await newSession();
+  const result = await session.list('/api/things/', 2, { foo: 'bar' });
+
+  expect(result).toEqual([{ one: 1 }, { two: 2 }]);
+  expect(scopeUnused.isDone()).toBeTruthy();
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
