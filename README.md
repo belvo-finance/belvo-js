@@ -80,6 +80,12 @@ Make sure to run `npm run lint`. Otherwise the build will break.
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/belvo-finance/belvo-js. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/belvo-finance/belvo-js/blob/master/CODE_OF_CONDUCT.md).
 
+If you wish to submit a pull request, please be sure check the items on this list:
+- [ ] Tests related to the changed code were executed
+- [ ] The source code has been coded following the OWASP security best practices (https://owasp.org/www-pdf-archive/OWASP_SCP_Quick_Reference_Guide_v2.pdf).
+- [ ] Commit message properly labeled
+- [ ] There is a ticket associated to each PR. 
+
 
 ## Code of Conduct
 
