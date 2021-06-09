@@ -1,4 +1,8 @@
-/** Represents a Belvo API resource */
+/** 
+ * Represents a Belvo API resource 
+ * @template T
+ * */
+
 class Resource {
   #endpoint = null;
 
@@ -7,16 +11,17 @@ class Resource {
    * @param {APISession} session - Belvo API session.
    */
   constructor(session) {
+    /** @private */
     this.session = session;
   }
 
   /**
    * Get a list of resources.
    * @async
-   * @param {Object} params - Receives two parameters.
+   * @param {object} params - Receives two parameters.
    * @param {number} [params.limit=100] - Maximum number of results.
-   * @param {Object} [params.filters={}] - Filters to get custom results.
-   * @returns {array} List of results.
+   * @param {object} [params.filters={}] - Filters to get custom results.
+   * @returns { Promise<import("../types/apiResponses").listResponse<T>> } List of results.
    * @throws {RequestError}
    */
   async list({ limit = 100, filters = {} } = {}) {
@@ -28,7 +33,7 @@ class Resource {
    * Get specific record details.
    * @async
    * @param {string} id - UUID4 representation of the resource Id.
-   * @returns {object}
+   * @returns {Promise<T>}
    * @throws {RequestError}
    */
   async detail(id) {
@@ -40,7 +45,7 @@ class Resource {
    * Delete specific record.
    * @async
    * @param {string} id - UUID4 representation of the resource Id.
-   * @returns {boolean} When the record is successfuly deleted returns true, otherwise false.
+   * @returns {Promise<boolean>} When the record is successfuly deleted returns true, otherwise false.
    */
   async delete(id) {
     const result = await this.session.delete(this.#endpoint, id);
@@ -54,7 +59,7 @@ class Resource {
    * @param {string} session - UUID4 representation of a "pending" session.
    * @param {string} token - OTP token.
    * @param {string} link - UUID4 representation of the link being used.
-   * @returns {object} Response.
+   * @returns {Promise<T>} Response.
    * @throws {RequestError}
    */
   async resume(session, token, link) {

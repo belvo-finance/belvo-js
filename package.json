@@ -8,7 +8,8 @@
     "lint": "eslint ./src",
     "build": "babel src -d lib",
     "test": "jest ./tests",
-    "generate-docs": "jsdoc --readme ./README.md --package ./package.json -c jsdoc.json"
+    "generate-docs": "jsdoc --readme ./README.md --package ./package.json -c jsdoc.json",
+    "generate-tsc": "tsc src/*.js --declaration --allowJs --emitDeclarationOnly --outDir types"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,8 @@
     "jest": "^25.3.0",
     "jsdoc": "^3.6.4",
     "minami": "^1.2.3",
-    "nock": "^12.0.3"
+    "nock": "^12.0.3",
+    "typescript": "^4.3.2"
   },
   "dependencies": {
     "axios": "^0.21.1",

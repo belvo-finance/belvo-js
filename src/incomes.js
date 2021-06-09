@@ -2,7 +2,8 @@ import Resource from './resources';
 
 /**
  * An Income contains a resume of monthly income Transaction in a Link.
- * @extends Resource
+ * @typedef { import("../types/apiResponses").incomesResponse } Response
+ * @extends Resource<Response>
  */
 class Income extends Resource {
   #endpoint = 'api/incomes/'
@@ -12,8 +13,9 @@ class Income extends Resource {
    *
    * @async
    * @param {string} link - UUID4 representation of a link Id.
-   * @param {object} options - Optional parameters (encryptionKey, saveData)
-   * @returns {object} Response
+   * @param {object} [options] - Optional parameters (saveData)
+   * @param {boolean} [options.saveData] - Indicates whether or not to persist the data in Belvo. When set to false, the data won't be persisted.
+   * @returns {Promise<Response>} Response
    * @throws {RequestError}
    */
   async retrieve(link, options = {}) {

@@ -14,12 +14,25 @@ import Transaction from './transactions';
 import WidgetToken from './widgetToken';
 
 class Client {
+  /**
+   * Instantiate the Belvo SDK
+   * 
+   * @param {string} secretKeyId - Enter your secretId generated on Belvo's dashboard
+   * @param {string} secretKeyPassword - Enter your secretPassword generated on Belvo's dashboard
+   * @param {string} url - Base URL from the Belvo environment you want to use 
+   */
   constructor(secretKeyId, secretKeyPassword, url = null) {
     this.session = new APISession(url);
     this.secretKeyId = secretKeyId;
     this.secretKeyPassword = secretKeyPassword;
   }
 
+  /**
+   * Start the session with Belvo (if not ES6 - async/await)
+   * 
+   * @async
+   * @returns {Promise<void>} an empty Promise is returned
+   */
   async connect() {
     const login = await this.session.login(this.secretKeyId, this.secretKeyPassword);
     if (!login) {
