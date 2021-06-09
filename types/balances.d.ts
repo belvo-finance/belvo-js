@@ -1,11 +1,10 @@
 export default Balance;
-/**
- * A Balance represents the financial status of an Account at a given time.
- */
 export type Response = import("../types/apiResponses").balancesResponse;
 /**
- * A Balance represents the financial status of an Account at a given time.
  * @typedef { import("../types/apiResponses").balancesResponse } Response
+ */
+/**
+ * A Balance represents the financial status of an Account at a given time.
  * @extends Resource<Response>
  */
 declare class Balance extends Resource<import("../types/apiResponses").balancesResponse> {

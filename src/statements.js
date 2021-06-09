@@ -1,8 +1,11 @@
 import Resource from './resources';
 
 /**
- * A Statement contains a resume of monthly Transactions inside an Account.
  * @typedef { import("../types/apiResponses").statementsResponse } Response
+ */
+
+/**
+ * A Statement contains a resume of monthly Transactions inside an Account.
  * @extends Resource<Response>
  */
 class Statement extends Resource {

@@ -1,15 +1,12 @@
 export default Invoice;
-/**
- * An Invoice is the representation of an electronic invoice,
- * that can be received or sent, by a business or an individual
- * and has been uploaded to the fiscal institution website.
- */
 export type Response = import("../types/apiResponses").invoicesResponse;
 /**
+ * @typedef { import("../types/apiResponses").invoicesResponse } Response
+ */
+/**
  * An Invoice is the representation of an electronic invoice,
  * that can be received or sent, by a business or an individual
  * and has been uploaded to the fiscal institution website.
- * @typedef { import("../types/apiResponses").invoicesResponse } Response
  * @extends Resource<Response>
  */
 declare class Invoice extends Resource<import("../types/apiResponses").invoicesResponse> {

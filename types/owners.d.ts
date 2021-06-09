@@ -1,13 +1,11 @@
 export default Owner;
-/**
- * An Owner represents the person who has access to a Link and
- * is the owner of all the Accounts inside the Link.
- */
 export type Response = import("../types/apiResponses").ownersResponse;
 /**
+ * @typedef { import("../types/apiResponses").ownersResponse } Response
+ */
+/**
  * An Owner represents the person who has access to a Link and
  * is the owner of all the Accounts inside the Link.
- * @typedef { import("../types/apiResponses").ownersResponse } Response
  * @extends Resource<Response>
  */
 declare class Owner extends Resource<import("../types/apiResponses").ownersResponse> {

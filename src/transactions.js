@@ -2,8 +2,11 @@ import moment from 'moment';
 import Resource from './resources';
 
 /**
- * A Transaction contains the detailed information of each movement inside an Account.
  * @typedef { import("../types/apiResponses").transactionsResponse } Response
+ */
+
+/**
+ * A Transaction contains the detailed information of each movement inside an Account.
  * @extends Resource<Response>
  */
 

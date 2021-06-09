@@ -1,11 +1,10 @@
 export default TaxStatus;
-/**
- * Retrieve tax status information from a specific fiscal link.
- */
 export type Response = import("../types/apiResponses").taxStatusResponse;
 /**
- * Retrieve tax status information from a specific fiscal link.
  * @typedef { import("../types/apiResponses").taxStatusResponse } Response
+ */
+/**
+ * Retrieve tax status information from a specific fiscal link.
  * @extends Resource<Response>
  */
 declare class TaxStatus extends Resource<import("../types/apiResponses").taxStatusResponse> {

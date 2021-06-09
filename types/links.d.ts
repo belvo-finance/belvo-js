@@ -1,11 +1,10 @@
 export default Link;
-/**
- * A Link is a set of credentials associated to a end-user access to an Institution.
- */
 export type Response = import("../types/apiResponses").linksResponse;
 /**
- * A Link is a set of credentials associated to a end-user access to an Institution.
  * @typedef { import("../types/apiResponses").linksResponse } Response
+ */
+/**
+ * A Link is a set of credentials associated to a end-user access to an Institution.
  * @extends Resource<Response>
  * */
 declare class Link extends Resource<import("../types/apiResponses").linksResponse> {

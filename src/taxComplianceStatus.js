@@ -1,8 +1,11 @@
 import Resource from './resources';
 
 /**
- * Retrieve tax compliance status information from a specific fiscal link.
  * @typedef { import("../types/apiResponses").taxComplianceStatusResponse } Response
+ */
+
+/**
+ * Retrieve tax compliance status information from a specific fiscal link.
  * @extends Resource<Response>
  */
 class TaxComplianceStatus extends Resource {

@@ -1,11 +1,10 @@
 export default Account;
-/**
- * An Account is the representation of a bank account inside a financial institution.
- */
 export type Response = import("../types/apiResponses").accountsResponse;
 /**
- * An Account is the representation of a bank account inside a financial institution.
  * @typedef { import("../types/apiResponses").accountsResponse } Response
+ */
+/**
+ * An Account is the representation of a bank account inside a financial institution.
  * @extends Resource<Response>
  */
 declare class Account extends Resource<import("../types/apiResponses").accountsResponse> {

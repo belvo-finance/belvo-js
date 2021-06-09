@@ -1,8 +1,11 @@
 import Resource from './resources';
 
 /**
- * An Income contains a resume of monthly income Transaction in a Link.
  * @typedef { import("../types/apiResponses").incomesResponse } Response
+ */
+
+/**
+ * An Income contains a resume of monthly income Transaction in a Link.
  * @extends Resource<Response>
  */
 class Income extends Resource {

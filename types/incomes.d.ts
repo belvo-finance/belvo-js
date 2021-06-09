@@ -1,11 +1,10 @@
 export default Income;
-/**
- * An Income contains a resume of monthly income Transaction in a Link.
- */
 export type Response = import("../types/apiResponses").incomesResponse;
 /**
- * An Income contains a resume of monthly income Transaction in a Link.
  * @typedef { import("../types/apiResponses").incomesResponse } Response
+ */
+/**
+ * An Income contains a resume of monthly income Transaction in a Link.
  * @extends Resource<Response>
  */
 declare class Income extends Resource<import("../types/apiResponses").incomesResponse> {

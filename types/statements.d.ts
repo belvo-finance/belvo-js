@@ -1,11 +1,10 @@
 export default Statement;
-/**
- * A Statement contains a resume of monthly Transactions inside an Account.
- */
 export type Response = import("../types/apiResponses").statementsResponse;
 /**
- * A Statement contains a resume of monthly Transactions inside an Account.
  * @typedef { import("../types/apiResponses").statementsResponse } Response
+ */
+/**
+ * A Statement contains a resume of monthly Transactions inside an Account.
  * @extends Resource<Response>
  */
 declare class Statement extends Resource<import("../types/apiResponses").statementsResponse> {

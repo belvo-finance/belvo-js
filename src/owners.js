@@ -1,9 +1,12 @@
 import Resource from './resources';
 
 /**
+ * @typedef { import("../types/apiResponses").ownersResponse } Response
+ */
+
+/**
  * An Owner represents the person who has access to a Link and
  * is the owner of all the Accounts inside the Link.
- * @typedef { import("../types/apiResponses").ownersResponse } Response
  * @extends Resource<Response>
  */
 class Owner extends Resource {

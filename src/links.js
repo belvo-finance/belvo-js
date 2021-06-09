@@ -2,8 +2,11 @@ import Resource from './resources';
 import { encodeFileB64 } from './utils';
 
 /**
- * A Link is a set of credentials associated to a end-user access to an Institution.
  * @typedef { import("../types/apiResponses").linksResponse } Response
+ */
+
+/**
+ * A Link is a set of credentials associated to a end-user access to an Institution.
  * @extends Resource<Response>
  * */
 

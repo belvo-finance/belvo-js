@@ -1,9 +1,12 @@
 import Resource from './resources';
 
 /**
+ * @typedef { import("../types/apiResponses").widgetTokenResponse } Response
+ */
+
+/**
  * A WidgetToken provides access and refresh keys to allow users to
  * initialize and embed our Connect Widget into their own apps.
- * @typedef { import("../types/apiResponses").widgetTokenResponse } Response
  * @extends Resource
  */
 

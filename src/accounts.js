@@ -1,8 +1,11 @@
 import Resource from './resources';
 
 /**
- * An Account is the representation of a bank account inside a financial institution.
  * @typedef { import("../types/apiResponses").accountsResponse } Response
+ */
+
+/**
+ * An Account is the representation of a bank account inside a financial institution.
  * @extends Resource<Response>
  */
 class Account extends Resource {

@@ -2,8 +2,11 @@ import moment from 'moment';
 import Resource from './resources';
 
 /**
- * A Balance represents the financial status of an Account at a given time.
  * @typedef { import("../types/apiResponses").balancesResponse } Response
+ */
+
+/**
+ * A Balance represents the financial status of an Account at a given time.
  * @extends Resource<Response>
  */
 class Balance extends Resource {

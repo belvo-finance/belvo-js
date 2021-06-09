@@ -1,11 +1,10 @@
 export default Transaction;
-/**
- * A Transaction contains the detailed information of each movement inside an Account.
- */
 export type Response = import("../types/apiResponses").transactionsResponse;
 /**
- * A Transaction contains the detailed information of each movement inside an Account.
  * @typedef { import("../types/apiResponses").transactionsResponse } Response
+ */
+/**
+ * A Transaction contains the detailed information of each movement inside an Account.
  * @extends Resource<Response>
  */
 declare class Transaction extends Resource<import("../types/apiResponses").transactionsResponse> {
