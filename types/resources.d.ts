@@ -36,7 +36,7 @@ declare class Resource<T> {
      * Delete specific record.
      * @async
      * @param {string} id - UUID4 representation of the resource Id.
-     * @returns {Promise<boolean>} When the record is successfuly deleted returns true, otherwise false.
+     * @returns {Promise<boolean>} If a record is successfuly deleted returns true, otherwise false.
      */
     delete(id: string): Promise<boolean>;
     /**

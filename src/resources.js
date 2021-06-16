@@ -1,5 +1,5 @@
-/** 
- * Represents a Belvo API resource 
+/**
+ * Represents a Belvo API resource
  * @template T
  * */
 
@@ -45,7 +45,7 @@ class Resource {
    * Delete specific record.
    * @async
    * @param {string} id - UUID4 representation of the resource Id.
-   * @returns {Promise<boolean>} When the record is successfuly deleted returns true, otherwise false.
+   * @returns {Promise<boolean>} If a record is successfuly deleted returns true, otherwise false.
    */
   async delete(id) {
     const result = await this.session.delete(this.#endpoint, id);

@@ -11,8 +11,9 @@ import Resource from './resources';
 class TaxComplianceStatus extends Resource {
   #endpoint = 'api/tax-compliance-status/'
 
-    /** @private */
-    resume() {}
+  /* eslint-disable class-methods-use-this */
+  /** @private */
+  resume() {}
 
   /**
    * Retrieve tax compliance status information from a specific fiscal link.
@@ -20,8 +21,8 @@ class TaxComplianceStatus extends Resource {
    * @async
    * @param {string} link - UUID4 representation of a `link` Id.
    * @param {object} [options] - Optional parameters (`saveData`, `attachPDF`)
-   * @param {boolean} [options.saveData] - Indicates whether or not to persist the data in Belvo. When set to `false`, the data won't be persisted.
-   * @param {boolean} [options.attachXML] - When set to `true`, you will receive the XML invoice in the response.
+   * @param {boolean} [options.saveData] - Indicates whether or not to persist the data in Belvo.
+   * @param {boolean} [options.attachXML] - If `true`, you will receive the XML invoice.
    * @returns {Promise<Response>} Response
    * @throws {RequestError}
    */

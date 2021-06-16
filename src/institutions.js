@@ -13,9 +13,11 @@ import Resource from './resources';
 class Institution extends Resource {
   #endpoint = 'api/institutions/'
 
+  /* eslint-disable class-methods-use-this */
   /** @private */
   delete() {}
 
+  /* eslint-disable class-methods-use-this */
   /** @private */
   resume() {}
 }
