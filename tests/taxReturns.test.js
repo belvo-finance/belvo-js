@@ -447,6 +447,21 @@ class TaxReturnsAPIMocker extends APIMocker {
       .reply(201, taxReturn);
   }
 
+  replyToCreateTaxReturnWithType() {
+    this.scope
+      .post('/api/tax-returns/', { link: linkId, type: "yearly", year_from: 2019, year_to: 2020 })
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(201, taxReturn);
+  }
+
+  replyToCreateTaxReturnWithDates() {
+    this.scope
+      .post('/api/tax-returns/', { link: linkId, type: 'monthly', date_from: '2020-01-01', date_to: '2020-03-30'})
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(201, taxReturn);
+  }
+
+
   replyToCreateTaxReturnWithOptions() {
     this.scope
       .post('/api/tax-returns/', {
@@ -457,6 +472,22 @@ class TaxReturnsAPIMocker extends APIMocker {
         encryption_key: '123pollitoingles',
         token: 'token123',
         attach_pdf: false,
+      })
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(201, taxReturn);
+  }
+
+  replyToCreateTaxReturnWithDateOptions() {
+    this.scope
+      .post('/api/tax-returns/', {
+        link: linkId,
+        date_from: "2020-01-01",
+        date_to: "2020-01-30",
+        save_data: false,
+        encryption_key: '123pollitoingles',
+        token: 'token123',
+        attach_pdf: false,
+        type: "monthly",
       })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(201, taxReturn);
@@ -497,6 +528,29 @@ test('can retrieve tax returns', async () => {
   expect(mocker.scope.isDone()).toBeTruthy();
 });
 
+test('can retrieve tax returns with type', async () => {
+  mocker.login().replyToCreateTaxReturnWithType();
+
+  const session = await newSession();
+  const taxReturns = new TaxReturn(session);
+  const result = await taxReturns.retrieve(linkId, 2019, 2020, {type:"yearly"});
+
+  expect(result).toEqual(taxReturn);
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
+
+
+test('can retrieve tax returns with dates', async () => {
+  mocker.login().replyToCreateTaxReturnWithDates();
+
+  const session = await newSession();
+  const taxReturns = new TaxReturn(session);
+  const result = await taxReturns.retrieve(linkId, '2020-01-01', '2020-03-30', {type: 'monthly'});
+
+  expect(result).toEqual(taxReturn);
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
+
 test('can retrieve tax returns with options', async () => {
   mocker.login().replyToCreateTaxReturnWithOptions();
 
@@ -509,6 +563,24 @@ test('can retrieve tax returns with options', async () => {
     attachPDF: false,
   };
   const result = await taxReturns.retrieve(linkId, 2019, 2020, options);
+
+  expect(result).toEqual(taxReturn);
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
+
+test('can retrieve tax returns  with dates and options', async () => {
+  mocker.login().replyToCreateTaxReturnWithDateOptions();
+
+  const session = await newSession();
+  const taxReturns = new TaxReturn(session);
+  const options = {
+    token: 'token123',
+    encryptionKey: '123pollitoingles',
+    saveData: false,
+    attachPDF: false,
+    type: "monthly",
+  };
+  const result = await taxReturns.retrieve(linkId, "2020-01-01", "2020-01-30", options);
 
   expect(result).toEqual(taxReturn);
   expect(mocker.scope.isDone()).toBeTruthy();

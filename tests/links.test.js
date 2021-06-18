@@ -87,6 +87,29 @@ class LinksAPIMocker extends APIMocker {
       .reply(201, recurrentLink);
   }
 
+  replyToCreateRecurrentLinkWithEmptyCertificate() {
+    this.scope
+      .post(
+        '/api/links/',
+        {
+          institution: 'banamex_mx_retail',
+          username: 'johndoe',
+          username2: 'janedoe',
+          username3: 'foo',
+          password: '123asd',
+          password2: 'asd123',
+          token: 'token123',
+          encryption_key: '123pollitoingles',
+          username_type: '02',
+          certificate: null,
+          private_key: null,
+          external_id: 'abc',
+        },
+      )
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(201, recurrentLink);
+  }
+
   replyToCreateRecurrentLink() {
     this.scope
       .post(
@@ -272,5 +295,28 @@ test('can patch link access_mode', async () => {
   const result = await links.patch(singleLink.id, { accessMode: Link.SINGLE });
 
   expect(result).toEqual(singleLink);
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
+
+test('cant register a link with options and empty certificate ', async () => {
+  mocker.login().replyToCreateRecurrentLinkWithEmptyCertificate();
+
+  const session = await newSession();
+  const links = new Link(session);
+
+  const options = {
+    username2: 'janedoe',
+    username3: 'foo',
+    password2: 'asd123',
+    token: 'token123',
+    encryptionKey: '123pollitoingles',
+    usernameType: '02',
+    certificate: `${__dirname}/dont_exist.txt`,
+    privateKey: `${__dirname}/dont_exist.txt`,
+    externalId: 'abc',
+  };
+
+  const result = await links.register('banamex_mx_retail', 'johndoe', '123asd', options);
+  expect(result).toEqual(recurrentLink);
   expect(mocker.scope.isDone()).toBeTruthy();
 });

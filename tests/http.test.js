@@ -2,6 +2,7 @@ import nock from 'nock';
 import { APIMocker, newSession } from './fixtures';
 import APISession from '../src/http';
 import RequestError from '../src/exceptions';
+import Client from '../src/belvo';
 
 
 class Mocker extends APIMocker {
@@ -104,6 +105,17 @@ test('incorrect login returns false', async () => {
   const login = await badSession.login('secret-id', 'wrong-password');
 
   expect(login).toBeFalsy();
+});
+
+test('belvo client throws an error', async () => {
+  const client = new Client('secret-id', 'secret-password', 'https://fake.api');
+  let error;
+  try {
+      await client.connect()
+  } catch (e) {
+      error = e;
+  }
+  expect(error).toEqual(new Error("Login failed."))
 });
 
 test('getAll() supports pagination', async () => {
