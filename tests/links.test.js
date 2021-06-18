@@ -52,6 +52,18 @@ class LinksAPIMocker extends APIMocker {
       .reply(201, singleLink);
   }
 
+  replyToUpdateAccessMode() {
+    this.scope
+      .patch(
+        `/api/links/${singleLink.id}/`,
+        {
+          access_mode: 'single',
+        },
+      )
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(200, singleLink);
+  }
+
   replyToCreateRecurrentLinkWithOptions() {
     this.scope
       .post(
@@ -249,5 +261,16 @@ test('can list link given filter external_id', async () => {
   const results = await links.list({ filters });
 
   expect(results).toEqual([singleLink]);
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
+
+test('can patch link access_mode', async () => {
+  mocker.login().replyToUpdateAccessMode();
+
+  const session = await newSession();
+  const links = new Link(session);
+  const result = await links.patch(singleLink.id, { accessMode: Link.SINGLE });
+
+  expect(result).toEqual(singleLink);
   expect(mocker.scope.isDone()).toBeTruthy();
 });
