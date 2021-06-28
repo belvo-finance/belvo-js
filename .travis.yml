@@ -18,4 +18,5 @@ deploy:
     tags: true
     branch: master
     repo: belvo-finance/belvo-js
+    node_js: '12'
   skip_cleanup: true
