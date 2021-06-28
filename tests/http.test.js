@@ -108,7 +108,8 @@ test('incorrect login returns false', async () => {
 });
 
 test('belvo client throws an error', async () => {
-  const client = new Client('secret-id', 'secret-password', 'https://fake.api');
+  mocker.replyToWrongLogin();
+  const client = new Client('secret-id', 'wrong-password', 'https://fake.api');
   let error;
   try {
       await client.connect()
