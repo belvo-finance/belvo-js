@@ -13,13 +13,13 @@ class Transaction extends Resource {
    * @async
    * @param {string} link - UUID4 representation of a Link Id.
    * @param {string} dateFrom - Required date from, format is YYYY-MM-DD.
-   * @param {object} options - Optional parameters (dateTo, token, encryptionKey, saveData)
+   * @param {object} options - Optional parameters (dateTo, token, encryptionKey, saveData, account)
    * @returns {object} Response
    * @throws {RequestError}
    */
   async retrieve(link, dateFrom, options = {}) {
     const {
-      token, encryptionKey, saveData,
+      token, encryptionKey, saveData, account,
     } = options;
     let {
       dateTo,
@@ -32,6 +32,7 @@ class Transaction extends Resource {
       token,
       date_from: dateFrom,
       date_to: dateTo,
+      account,
       encryption_key: encryptionKey,
       save_data: saveData,
     });
