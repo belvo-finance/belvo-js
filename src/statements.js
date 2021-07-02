@@ -15,13 +15,13 @@ class Statement extends Resource {
    * @param {string} account - UUID4 representation of an account Id.
    * @param {number} year - The year you want to retrieve.
    * @param {number} month - The month you want to retrieve.
-   * @param {object} options - Optional parameters (token, encryptionKey, saveData, attachPDF)
+   * @param {object} options - Optional parameters (token, saveData, attachPDF)
    * @returns {object} Response
    * @throws {RequestError}
    */
   async retrieve(link, account, year, month, options = {}) {
     const {
-      token, encryptionKey, saveData, attachPDF,
+      token, saveData, attachPDF,
     } = options;
     const result = await this.session.post(this.#endpoint, {
       link,
@@ -29,7 +29,6 @@ class Statement extends Resource {
       year,
       month,
       token,
-      encryption_key: encryptionKey,
       save_data: saveData,
       attach_pdf: attachPDF,
     });

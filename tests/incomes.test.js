@@ -39,7 +39,6 @@ class IncomesAPIMocker extends APIMocker {
       .post('/api/incomes/', {
         link: linkId,
         save_data: false,
-        encryption_key: '123pollitoingles',
       })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(200, incomesResp);
@@ -76,7 +75,6 @@ test('can retrieve incomes with options', async () => {
   const session = await newSession();
   const incomes = new Income(session);
   const options = {
-    encryptionKey: '123pollitoingles',
     saveData: false,
   };
   const result = await incomes.retrieve(linkId, options);

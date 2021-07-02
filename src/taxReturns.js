@@ -27,19 +27,18 @@ class TaxReturn extends Resource {
    * @param {string} link - UUID4 representation of a link Id.
    * @param {string} yearDateFrom - Required year or date from, format is YYYY-MM-DD
    * @param {string} yearDateTo - Required year or date to, format is YYYY-MM-DD.
-   * @param {object} options - Optional parameters (token, encryptionKey, saveData, attachPDF)
+   * @param {object} options - Optional parameters (token, saveData, attachPDF)
    * @returns {object} Response
    * @throws {RequestError}
    */
   async retrieve(link, yearDateFrom, yearDateTo, options = {}) {
     const {
-      token, encryptionKey, saveData, attachPDF, type,
+      token, saveData, attachPDF, type,
     } = options;
 
     const data = {
       link,
       token,
-      encryption_key: encryptionKey,
       save_data: saveData,
       attach_pdf: attachPDF,
       type,

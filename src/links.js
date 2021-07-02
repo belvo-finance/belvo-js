@@ -31,7 +31,7 @@ class Link extends Resource {
    * @param {string} username - Username used to sign in online by the end-user.
    * @param {string} password - Password used to sign in online by the end-user.
    * @param {object} options - Optional parameters
-   *   (token, encryptionKey, usernameType, username2, username3, password2, accessMode,
+   *   (token, usernameType, username2, username3, password2, accessMode,
    *    certificate, privateKey, externalId).
    * @returns {object} Newly created link.
    * @throws {RequestError}
@@ -40,7 +40,7 @@ class Link extends Resource {
     institution, username, password, options = {},
   ) {
     const {
-      token, encryptionKey, usernameType, username2, username3, password2, accessMode, externalId,
+      token, usernameType, username2, username3, password2, accessMode, externalId,
     } = options;
     let {
       certificate, privateKey,
@@ -56,7 +56,6 @@ class Link extends Resource {
         password,
         password2,
         token,
-        encryption_key: encryptionKey,
         access_mode: accessMode,
         username_type: usernameType,
         certificate,
@@ -75,13 +74,13 @@ class Link extends Resource {
    * @param {string} id - UUID4 representation of the link Id.
    * @param {string} password - New password.
    * @param {object} options - Optional parameters
-   *  (token, encryptionKey, password2, usernameType, certificate, privateKey).
+   *  (token, password2, usernameType, certificate, privateKey).
    * @returns {object} Response
    * @throws {RequestError}
    */
   async update(id, options = {}) {
     const {
-      token, encryptionKey, password, password2, usernameType,
+      token, password, password2, usernameType,
     } = options;
     let {
       certificate, privateKey,
@@ -92,7 +91,6 @@ class Link extends Resource {
       password,
       password2,
       token,
-      encryption_key: encryptionKey,
       username_type: usernameType,
       certificate,
       private_key: privateKey,

@@ -92,7 +92,7 @@ class AccountsAPIMocker extends APIMocker {
   replyToCreateaccountWithOptions() {
     this.scope
       .post('/api/accounts/', {
-        link: linkId, save_data: false, encryption_key: '123pollitoingles', token: 'token123',
+        link: linkId, save_data: false, token: 'token123',
       })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(201, account);
@@ -140,7 +140,6 @@ test('can retrieve accounts with options', async () => {
   const accounts = new Account(session);
   const options = {
     token: 'token123',
-    encryptionKey: '123pollitoingles',
     saveData: false,
   };
   const result = await accounts.retrieve(linkId, options);

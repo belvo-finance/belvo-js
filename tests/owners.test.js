@@ -57,7 +57,7 @@ class OwnersAPIMocker extends APIMocker {
   replyToCreateOwnerWithOptions() {
     this.scope
       .post('/api/owners/', {
-        link: linkId, save_data: false, encryption_key: '123pollitoingles', token: 'token123',
+        link: linkId, save_data: false, token: 'token123',
       })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(201, owner);
@@ -105,7 +105,6 @@ test('can retrieve owners with options', async () => {
   const owners = new Owner(session);
   const options = {
     token: 'token123',
-    encryptionKey: '123pollitoingles',
     saveData: false,
   };
   const result = await owners.retrieve(linkId, options);

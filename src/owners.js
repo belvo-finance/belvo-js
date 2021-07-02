@@ -13,16 +13,15 @@ class Owner extends Resource {
    * Retrieve owner information from a specific link.
    * @async
    * @param {string} link - UUID4 representation of a link Id.
-   * @param {object} options - Optional parameters (token, encryptionKey, saveData)
+   * @param {object} options - Optional parameters (token, saveData)
    * @returns {object} - Response
    * @throws {RequestError}
    */
   async retrieve(link, options = {}) {
-    const { token, encryptionKey, saveData } = options;
+    const { token, saveData } = options;
     const result = await this.session.post(this.#endpoint, {
       link,
       token,
-      encryption_key: encryptionKey,
       save_data: saveData,
     });
     return result;

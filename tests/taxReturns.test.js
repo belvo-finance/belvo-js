@@ -469,7 +469,6 @@ class TaxReturnsAPIMocker extends APIMocker {
         year_from: 2019,
         year_to: 2020,
         save_data: false,
-        encryption_key: '123pollitoingles',
         token: 'token123',
         attach_pdf: false,
       })
@@ -484,7 +483,6 @@ class TaxReturnsAPIMocker extends APIMocker {
         date_from: "2020-01-01",
         date_to: "2020-01-30",
         save_data: false,
-        encryption_key: '123pollitoingles',
         token: 'token123',
         attach_pdf: false,
         type: "monthly",
@@ -558,7 +556,6 @@ test('can retrieve tax returns with options', async () => {
   const taxReturns = new TaxReturn(session);
   const options = {
     token: 'token123',
-    encryptionKey: '123pollitoingles',
     saveData: false,
     attachPDF: false,
   };
@@ -575,7 +572,6 @@ test('can retrieve tax returns  with dates and options', async () => {
   const taxReturns = new TaxReturn(session);
   const options = {
     token: 'token123',
-    encryptionKey: '123pollitoingles',
     saveData: false,
     attachPDF: false,
     type: "monthly",

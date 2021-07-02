@@ -20,13 +20,13 @@ class Invoice extends Resource {
    * @param {string} dateFrom - Required date from, format is YYYY-MM-DD.
    * @param {string} dateTo - Required date to, format is YYYY-MM-DD.
    * @param {string} type - Required type, it can be 'INFLOW' or 'OUTFLOW'.
-   * @param {object} options - Optional parameters (token, encryptionKey, saveData, attachXML)
+   * @param {object} options - Optional parameters (token, saveData, attachXML)
    * @returns {object} Response
    * @throws {RequestError}
    */
   async retrieve(link, dateFrom, dateTo, type, options = {}) {
     const {
-      token, encryptionKey, saveData, attachXML,
+      token, saveData, attachXML,
     } = options;
     const result = await this.session.post(this.#endpoint, {
       link,
@@ -34,7 +34,6 @@ class Invoice extends Resource {
       date_from: dateFrom,
       date_to: dateTo,
       type,
-      encryption_key: encryptionKey,
       save_data: saveData,
       attach_xml: attachXML,
     });
