@@ -36,7 +36,7 @@ class Invoice extends Resource {
    */
   async retrieve(link, dateFrom, dateTo, type, options = {}) {
     const {
-      token, encryptionKey, saveData, attachXML,
+      token, saveData, attachXML,
     } = options;
     const result = await this.session.post(this.#endpoint, {
       link,
@@ -44,7 +44,6 @@ class Invoice extends Resource {
       date_from: dateFrom,
       date_to: dateTo,
       type,
-      encryption_key: encryptionKey,
       save_data: saveData,
       attach_xml: attachXML,
     });

@@ -22,10 +22,9 @@ class Income extends Resource {
    * @throws {RequestError}
    */
   async retrieve(link, options = {}) {
-    const { encryptionKey, saveData } = options;
+    const { saveData } = options;
     const result = await this.session.post(this.#endpoint, {
       link,
-      encryption_key: encryptionKey,
       save_data: saveData,
     });
     return result;

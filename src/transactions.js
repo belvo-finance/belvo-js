@@ -27,7 +27,7 @@ class Transaction extends Resource {
    */
   async retrieve(link, dateFrom, options = {}) {
     const {
-      token, encryptionKey, saveData,
+      token, saveData,
     } = options;
     let {
       dateTo,
@@ -40,7 +40,6 @@ class Transaction extends Resource {
       token,
       date_from: dateFrom,
       date_to: dateTo,
-      encryption_key: encryptionKey,
       save_data: saveData,
     });
     return result;

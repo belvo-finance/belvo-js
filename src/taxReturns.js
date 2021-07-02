@@ -44,13 +44,12 @@ class TaxReturn extends Resource {
    */
   async retrieve(link, yearDateFrom, yearDateTo, options = {}) {
     const {
-      token, encryptionKey, saveData, attachPDF, type,
+      token, saveData, attachPDF, type,
     } = options;
 
     const data = {
       link,
       token,
-      encryption_key: encryptionKey,
       save_data: saveData,
       attach_pdf: attachPDF,
       type,

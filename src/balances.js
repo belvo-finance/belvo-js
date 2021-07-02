@@ -27,7 +27,7 @@ class Balance extends Resource {
    */
   async retrieve(link, dateFrom, options = {}) {
     const {
-      account, token, encryptionKey, saveData,
+      account, token, saveData,
     } = options;
     let {
       dateTo,
@@ -41,7 +41,6 @@ class Balance extends Resource {
       account,
       date_from: dateFrom,
       date_to: dateTo,
-      encryption_key: encryptionKey,
       save_data: saveData,
     });
     return result;

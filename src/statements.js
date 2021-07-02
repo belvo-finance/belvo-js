@@ -28,7 +28,7 @@ class Statement extends Resource {
    */
   async retrieve(link, account, year, month, options = {}) {
     const {
-      token, encryptionKey, saveData, attachPDF,
+      token, saveData, attachPDF,
     } = options;
     const result = await this.session.post(this.#endpoint, {
       link,
@@ -36,7 +36,6 @@ class Statement extends Resource {
       year,
       month,
       token,
-      encryption_key: encryptionKey,
       save_data: saveData,
       attach_pdf: attachPDF,
     });

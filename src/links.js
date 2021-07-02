@@ -54,7 +54,7 @@ class Link extends Resource {
     institution, username, password, options = {},
   ) {
     const {
-      token, encryptionKey, usernameType, username2, username3, password2, accessMode, externalId,
+      token, usernameType, username2, username3, password2, accessMode, externalId,
     } = options;
     let {
       certificate, privateKey,
@@ -70,7 +70,6 @@ class Link extends Resource {
         password,
         password2,
         token,
-        encryption_key: encryptionKey,
         access_mode: accessMode,
         username_type: usernameType,
         certificate,
@@ -100,7 +99,7 @@ class Link extends Resource {
    */
   async update(id, options = {}) {
     const {
-      token, encryptionKey, password, password2, usernameType,
+      token, password, password2, usernameType,
     } = options;
     let {
       certificate, privateKey,
@@ -111,7 +110,6 @@ class Link extends Resource {
       password,
       password2,
       token,
-      encryption_key: encryptionKey,
       username_type: usernameType,
       certificate,
       private_key: privateKey,

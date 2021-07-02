@@ -28,11 +28,10 @@ class TaxStatus extends Resource {
    */
   async retrieve(link, options = {}) {
     const {
-      encryptionKey, saveData, attachPDF,
+      saveData, attachPDF,
     } = options;
     const result = await this.session.post(this.#endpoint, {
       link,
-      encryption_key: encryptionKey,
       save_data: saveData,
       attach_pdf: attachPDF,
     });
