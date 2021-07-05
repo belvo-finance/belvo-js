@@ -52,7 +52,7 @@ import Client from 'belvo';
 const client = new Client(
   'YOUR-KEY-ID',
   'YOUR-SECRET',
-  'https://sandbox.belvo.com'
+  'sandbox'
 );
 
 async function getLinks() {
