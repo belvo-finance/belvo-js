@@ -30,7 +30,7 @@ var belvo = require("belvo").default;
 var client = new belvo(
   'YOUR-KEY-ID',
   'YOUR-SECRET',
-  'https://sandbox.belvo.com'
+  'sandbox'
 );
 
 client.connect()
