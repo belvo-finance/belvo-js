@@ -28,7 +28,7 @@ class Client {
       throw new Error('You need to provide a URL or a valid environment.');
     }
 
-    this.session = new APISession(url);
+    this.session = new APISession(belvoUrl);
     this.secretKeyId = secretKeyId;
     this.secretKeyPassword = secretKeyPassword;
   }
