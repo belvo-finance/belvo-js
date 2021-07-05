@@ -12,15 +12,22 @@ import TaxReturn from './taxReturns';
 import TaxStatus from './taxStatus';
 import Transaction from './transactions';
 import WidgetToken from './widgetToken';
+import { urlResolver } from './utils';
 
 class Client {
   /**
    * Instantiate the Belvo SDK
    * @param {string} secretKeyId - Enter your secretId generated on Belvo's dashboard
    * @param {string} secretKeyPassword - Enter your secretPassword generated on Belvo's dashboard
-   * @param {string} url - Base URL from the Belvo environment you want to use
+   * @param {string} url - Belvo base URL or environment (`sandbox`, `development` or `production`)
    */
   constructor(secretKeyId, secretKeyPassword, url = null) {
+    const belvoUrl = urlResolver(url || process.env.BELVO_API_URL);
+
+    if (!belvoUrl) {
+      throw new Error('You need to provide a URL or a valid environment.');
+    }
+
     this.session = new APISession(url);
     this.secretKeyId = secretKeyId;
     this.secretKeyPassword = secretKeyPassword;

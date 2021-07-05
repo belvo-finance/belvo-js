@@ -4,7 +4,7 @@ declare class Client {
      * Instantiate the Belvo SDK
      * @param {string} secretKeyId - Enter your secretId generated on Belvo's dashboard
      * @param {string} secretKeyPassword - Enter your secretPassword generated on Belvo's dashboard
-     * @param {string} url - Base URL from the Belvo environment you want to use
+     * @param {string} url - Belvo base URL or environment (`sandbox`, `development` or `production`)
      */
     constructor(secretKeyId: string, secretKeyPassword: string, url?: string);
     session: APISession;

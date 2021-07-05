@@ -7,5 +7,18 @@ const encodeFileB64 = (path) => {
   return null;
 };
 
+const Environment = Object.freeze({
+  SANDBOX: 'https://sandbox.belvo.com',
+  DEVELOPMENT: 'https://development.belvo.com',
+  PRODUCTION: 'https://api.belvo.com',
+});
+
+const urlResolver = (environment = '') => {
+  if (environment) {
+    return Environment[environment.toUpperCase()] || environment;
+  }
+  return null;
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { encodeFileB64 };
+export { encodeFileB64, urlResolver };
