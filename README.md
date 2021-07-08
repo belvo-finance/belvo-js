@@ -57,6 +57,7 @@ const client = new Client(
 
 async function getLinks() {
   try {
+    await client.connect();
     const links = await client.links.list();
     console.log(links);
   } catch (error) {
