@@ -49,7 +49,7 @@ Or if you prefer to use ES6 and async/await
 ```javascript
 import Client from 'belvo';
 
-const client = new Client(
+const client = new Client.default(
   'YOUR-KEY-ID',
   'YOUR-SECRET',
   'sandbox'
