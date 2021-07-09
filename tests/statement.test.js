@@ -80,7 +80,6 @@ class StatementsAPIMocker extends APIMocker {
         year: 2020,
         month: 1,
         save_data: false,
-        encryption_key: '123pollitoingles',
         token: 'token123',
         attach_pdf: false,
       })
@@ -130,7 +129,6 @@ test('can retrieve statements with options', async () => {
   const statements = new Statement(session);
   const options = {
     token: 'token123',
-    encryptionKey: '123pollitoingles',
     saveData: false,
     attachPDF: false,
   };

@@ -2,7 +2,7 @@ import nock from 'nock';
 import { APIMocker, newSession } from './fixtures';
 import APISession from '../src/http';
 import RequestError from '../src/exceptions';
-
+import Client from '../src/belvo';
 
 class Mocker extends APIMocker {
   addThingsPageOne() {
@@ -106,6 +106,18 @@ test('incorrect login returns false', async () => {
   expect(login).toBeFalsy();
 });
 
+test('belvo client throws an error', async () => {
+  mocker.replyToWrongLogin();
+  const client = new Client('secret-id', 'wrong-password', 'https://fake.api');
+  let error;
+  try {
+    await client.connect();
+  } catch (e) {
+    error = e;
+  }
+  expect(error).toEqual(new Error('Login failed.'));
+});
+
 test('getAll() supports pagination', async () => {
   mocker.login().replyWithPaginatedThings();
   const session = await newSession();
@@ -160,7 +172,6 @@ test('get by id works ok', async () => {
   expect(result).toEqual({ id: 666, one: 1 });
   expect(mocker.scope.isDone()).toBeTruthy();
 });
-
 
 test('get handles error', async () => {
   mocker.login().replyToGetThing(404);
@@ -255,7 +266,7 @@ test('get results by filters', async () => {
       count: 3,
       next: 'https://fake.api/api/things/?foo=bar&page=2',
       previous: 'https://fake.api/api/things/?foo=bar&page=1',
-      results: [{ one: 1}, { two: 2 }]
+      results: [{ one: 1 }, { two: 2 }],
     });
 
   const session = await newSession();
@@ -264,4 +275,37 @@ test('get results by filters', async () => {
   expect(result).toEqual([{ one: 1 }, { two: 2 }]);
   expect(scopeUnused.isDone()).toBeTruthy();
   expect(mocker.scope.isDone()).toBeTruthy();
+});
+
+test('throw exception when environment or url is not provided', async () => {
+  expect(
+    () => new Client('key-id', 'key-password'),
+  ).toThrow('You need to provide a URL or a valid environment.');
+});
+
+test.each([
+  ['sandbox', 'https://sandbox.belvo.com'],
+  ['development', 'https://development.belvo.com'],
+  ['production', 'https://api.belvo.com'],
+])('belvo client environment %s should be return url %s', async (environment, expected) => {
+  const client = new Client('key-id', 'key-password', environment);
+  expect(client.session.session.defaults.baseURL).toEqual(expected);
+});
+
+test.each([
+  ['https://sandbox.belvo.com', 'https://sandbox.belvo.com'],
+  ['https://development.belvo.com', 'https://development.belvo.com'],
+  ['https://api.belvo.com', 'https://api.belvo.com'],
+])('belvo client url argument %s should be return %s', async (url, expected) => {
+  const client = new Client('key-id', 'key-password', url);
+  expect(client.session.session.defaults.baseURL).toEqual(expected);
+});
+
+test.each([
+  ['development', 'https://development.belvo.com'],
+  ['http://localhost:8000', 'http://localhost:8000'],
+])('get BELVO_API_URL from process.env', async (value, expected) => {
+  process.env.BELVO_API_URL = value;
+  const client = new Client('key-id', 'key-password');
+  expect(client.session.session.defaults.baseURL).toEqual(expected);
 });

@@ -52,7 +52,6 @@ class TaxStatusAPIMocker extends APIMocker {
       .post('/api/tax-status/', {
         link: linkId,
         save_data: false,
-        encryption_key: '123pollitoingles',
         attach_pdf: false,
       })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
@@ -93,7 +92,6 @@ test('can retrieve tax status with options', async () => {
   const session = await newSession();
   const taxStatusResource = new TaxStatus(session);
   const options = {
-    encryptionKey: '123pollitoingles',
     saveData: false,
     attachPDF: false,
   };

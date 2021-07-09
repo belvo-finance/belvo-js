@@ -107,7 +107,17 @@ class TransactionsAPIMocker extends APIMocker {
   replyToCreateTransactionWithOptions() {
     this.scope
       .post('/api/transactions/', {
-        link: linkId, date_from: '2019-10-20', date_to: '2019-12-01', save_data: false, encryption_key: '123pollitoingles', token: 'token123',
+        link: linkId, date_from: '2019-10-20', date_to: '2019-12-01', save_data: false, token: 'token123',
+      })
+      .basicAuth({ user: 'secret-id', pass: 'secret-password' })
+      .reply(201, transaction);
+  }
+
+  replyToCreateTransactionWithOptionsAccount() {
+    this.scope
+      .post('/api/transactions/', {
+        link: linkId, date_from: '2019-10-20', date_to: '2019-12-01', save_data: false, token: 'token123',
+        account: "123456"
       })
       .basicAuth({ user: 'secret-id', pass: 'secret-password' })
       .reply(201, transaction);
@@ -169,7 +179,23 @@ test('can retrieve transactions with options', async () => {
   const options = {
     dateTo: '2019-12-01',
     token: 'token123',
-    encryptionKey: '123pollitoingles',
+    saveData: false,
+  };
+  const result = await transactions.retrieve(linkId, '2019-10-20', options);
+
+  expect(result).toEqual(transaction);
+  expect(mocker.scope.isDone()).toBeTruthy();
+});
+
+test('can retrieve transactions with options and account', async () => {
+  mocker.login().replyToCreateTransactionWithOptionsAccount();
+
+  const session = await newSession();
+  const transactions = new Transaction(session);
+  const options = {
+    dateTo: '2019-12-01',
+    account: "123456",
+    token: 'token123',
     saveData: false,
   };
   const result = await transactions.retrieve(linkId, '2019-10-20', options);

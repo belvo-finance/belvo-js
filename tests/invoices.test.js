@@ -99,7 +99,6 @@ class InvoicesAPIMocker extends APIMocker {
         date_to: '2019-12-01',
         type: 'INFLOW',
         save_data: false,
-        encryption_key: '123pollitoingles',
         token: 'token123',
         attach_xml: false,
       })
@@ -149,7 +148,6 @@ test('can retrieve invoices with options', async () => {
   const invoices = new Invoice(session);
   const options = {
     token: 'token123',
-    encryptionKey: '123pollitoingles',
     saveData: false,
     attachXML: false,
   };
