@@ -27,7 +27,7 @@ class Transaction extends Resource {
    */
   async retrieve(link, dateFrom, options = {}) {
     const {
-      token, saveData,
+      token, saveData, account,
     } = options;
     let {
       dateTo,
@@ -38,6 +38,7 @@ class Transaction extends Resource {
     const result = await this.session.post(this.#endpoint, {
       link,
       token,
+      account,
       date_from: dateFrom,
       date_to: dateTo,
       save_data: saveData,

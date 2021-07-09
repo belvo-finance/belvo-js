@@ -13,10 +13,6 @@ import Resource from './resources';
 class Invoice extends Resource {
   #endpoint = 'api/invoices/'
 
-  /* eslint-disable class-methods-use-this */
-  /** @private */
-  resume() {}
-
   /**
    * Retrieve invoices information from a specific fiscal link.
    * You can ask for a maximum of 1 year of invoices per request,

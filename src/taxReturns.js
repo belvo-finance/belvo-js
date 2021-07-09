@@ -23,10 +23,6 @@ class TaxReturn extends Resource {
    */
   static MONTHLY = 'monthly';
 
-  /* eslint-disable class-methods-use-this */
-  /** @private */
-  resume() { }
-
   /**
    * Retrieve tax returns information from a specific fiscal link.
    *

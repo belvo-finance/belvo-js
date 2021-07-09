@@ -128,6 +128,29 @@ class Link extends Resource {
   async token(id, scopes) {
     return this.session.post('api/token/', { link_id: id, scopes });
   }
+
+  /**
+   * Patch an existing link.
+   * @async
+   * @param {string} id - UUID4 representation of the link Id.
+   * @param {object} options - Optional parameters (accessMode).
+   * @returns {object} Link data updated.
+   * @throws {RequestError}
+   */
+   async patch(
+    id, options = {},
+  ) {
+    const {
+      accessMode,
+    } = options;
+
+    const result = await this.session.patch(
+      `${this.#endpoint}${id}/`, {
+        access_mode: accessMode,
+      },
+    );
+    return result;
+  }
 }
 
 export default Link;
