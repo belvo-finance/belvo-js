@@ -30,7 +30,7 @@ var belvo = require("belvo").default;
 var client = new belvo(
   'YOUR-KEY-ID',
   'YOUR-SECRET',
-  'https://sandbox.belvo.com'
+  'sandbox'
 );
 
 client.connect()
@@ -52,7 +52,7 @@ import Client from 'belvo';
 const client = new Client(
   'YOUR-KEY-ID',
   'YOUR-SECRET',
-  'https://sandbox.belvo.com'
+  'sandbox'
 );
 
 async function getLinks() {

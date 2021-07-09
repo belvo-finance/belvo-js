@@ -41,6 +41,7 @@ class Transaction extends Resource {
       account,
       date_from: dateFrom,
       date_to: dateTo,
+      account,
       save_data: saveData,
     });
     return result;
