@@ -23,7 +23,68 @@ Install the package using npm
 $ npm install belvo --save
 ```
 
-## Usage
+## Usage (create link via widget)
+
+When your user successfully links their account using the [Connect Widget](https://developers.belvo.com/docs/connect-widget), your implemented callback funciton will return the `link_id` required to make further API to retrieve information.
+
+
+```javascript
+import Client from 'belvo';
+
+const client = new Client(
+  'YOUR-KEY-ID',
+  'YOUR-SECRET',
+  'sandbox'
+);
+
+// Get the link_id from the result of your widget callback function
+let linkId = resultFromCallbackFunction.id
+
+function retrieveAccounts (linkId) {
+    return client.connect().then(function () {
+        return client.accounts.retrieve(linkId)
+            .then(function (response) {
+                console.log(response)
+            })
+            .catch(function (error) {
+                console.error(error)
+            });
+    })
+}
+
+```
+
+
+Or if you prefer to use ES6 and async/await
+
+```javascript
+import Client from 'belvo';
+
+const client = new Client(
+  'YOUR-KEY-ID',
+  'YOUR-SECRET',
+  'sandbox'
+);
+
+// Get the link_id from the result of your widget callback function
+let linkId = result_from_callback_function.id
+
+async function retrieveAccounts(linkId) {
+  try {
+      await client.connect()
+      return await client.accounts.retrieve(linkId);
+  } catch (error) {
+      console.log(error);
+  }
+}
+```
+
+
+## Usage (create link via SDK)
+
+You can also manually create the link using the SDK. However, for security purposes, we highly recommend, that you use the [Connect Widget](https://developers.belvo.com/docs/connect-widget) to create the link and follow the **Usage (create link via widget)** example.
+
+
 ```javascript
 var belvo = require("belvo").default;
 
@@ -33,16 +94,20 @@ var client = new belvo(
   'sandbox'
 );
 
-client.connect()
-  .then(function () {
-    client.links.list()
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-});
+function registerLinkAndRetrieveAccounts () {
+  return client.connect().then(function () {
+      return client.links.register('erebor_mx_retail', 'bnk1002', 'full')
+          .then(function (response) {
+              return client.accounts.retrieve(response.id);
+          })
+          .then(function (response) {
+              console.error(response)
+          })
+          .catch(function (error) {
+              console.error(error)
+          });
+  })
+}
 ```
 Or if you prefer to use ES6 and async/await
 
@@ -55,12 +120,14 @@ const client = new Client(
   'sandbox'
 );
 
-async function getLinks() {
+async function registerLinkAndRetrieveAccounts () {
   try {
-    const links = await client.links.list();
-    console.log(links);
+      await client.connect()
+      const link = await client.links.register('erebor_mx_retail', 'bnk1006', 'supersecret');
+      console.log(link)
+      return await client.accounts.retrieve(link.id);
   } catch (error) {
-    console.log(error);
+      console.log(error);
   }
 }
 ```
