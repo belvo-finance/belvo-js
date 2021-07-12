@@ -38,7 +38,7 @@ const client = new Client(
 );
 
 // Get the link_id from the result of your widget callback function
-let linkId = resultFromCallbackFunction.id
+const linkId = resultFromCallbackFunction.id
 
 function retrieveAccounts (linkId) {
     return client.connect().then(function () {
