@@ -29,9 +29,9 @@ When your user successfully links their account using the [Connect Widget](https
 
 
 ```javascript
-import Client from 'belvo';
+var belvo = require("belvo").default;
 
-const client = new Client(
+var client = new belvo(
   'YOUR-KEY-ID',
   'YOUR-SECRET',
   'sandbox'
