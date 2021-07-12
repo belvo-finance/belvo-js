@@ -44,7 +44,7 @@ function retrieveAccounts (linkId) {
     return client.connect().then(function () {
         return client.accounts.retrieve(linkId)
             .then(function (response) {
-                console.log(response)
+                return(response);
             })
             .catch(function (error) {
                 console.error(error)
@@ -101,7 +101,7 @@ function registerLinkAndRetrieveAccounts () {
               return client.accounts.retrieve(response.id);
           })
           .then(function (response) {
-              console.error(response)
+              return response;
           })
           .catch(function (error) {
               console.error(error)
